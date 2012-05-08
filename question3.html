@@ -1,0 +1,26 @@
+<html>
+<head>
+	<link href="http://fonts.googleapis.com/css?family=Fredericka+the+Great|Open+Sans+Condensed:700" media="screen" rel="stylesheet" type="text/css">
+	<link href="css/template.css" media="screen" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>        
+	<script type="text/javascript" src="js/template.js"></script>
+</head>
+<body >
+	<div id="question">
+		<span  class="questionHeader">Question 3</span>
+		<p class="contentText">You own a license plate manufacturing company. Write a program that takes a population and determines the simplest pattern that will produce enough unique plates. Since all the plates that match the pattern will be generated, find the pattern that produces the least excess plates. Use a combination of letters (A-Z) and numbers (0-9).
+		</p>
+	</div>
+	<div id="answer">
+		<span  class="questionHeader">Answer</span>
+			<p class="contentText">&nbsp;&nbsp;&nbsp; I created a Java Applet mainly to use a different language, even though applets are a bit outdated. You can input the population and it will return the Letters, Numbers, Remainder and an Example Plate.</p>
+			<object type="application/x-java-applet"  class="imageBorder" height="100" width="550">
+			  <param name="code" value="MainGui.java" />
+			  <param name="archive" value="assets/Question3.jar" />
+			  Applet failed to run.  No Java plug-in was found.
+			</object>
+			<p class="contentText">&nbsp;&nbsp;&nbsp; Assumption: At first I had the simplest pattern the pattern with the least amount of characters, but changed it to least amount of characters give or take 1 extra character. Example 260000 using 4 Letters you get 430,976 excess, but using 1 letter and 4 numbers you get 0 excess.</p>
+	</div>
+</body>
+</html>

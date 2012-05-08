@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   viewBox="0 0 80 80"
+   id="svg2">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3043">
+      <stop
+         id="stop3045"
+         style="stop-color:#cccccc;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop3047"
+         style="stop-color:#cccccc;stop-opacity:0"
+         offset="1" />
+    </linearGradient>
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter3035">
+      <feGaussianBlur
+         id="feGaussianBlur3037"
+         stdDeviation="2"
+         in="SourceAlpha"
+         result="result0" />
+      <feComposite
+         in2="result0"
+         operator="arithmetic"
+         k1="0"
+         k2="1"
+         k3="10"
+         k4="0"
+         in="SourceGraphic"
+         result="result3"
+         id="feComposite3039" />
+      <feComposite
+         in2="result3"
+         operator="in"
+         in="result3"
+         result="result4"
+         id="feComposite3041" />
+    </filter>
+    <linearGradient
+       x1="39.775719"
+       y1="78.416283"
+       x2="40.616146"
+       y2="-4.2965508"
+       id="linearGradient3049"
+       xlink:href="#linearGradient3043"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.586747,0,0,2.6170201,-52.235009,915.80666)" />
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-972.36218)"
+     id="layer1">
+    <path
+       d="m 12.972413,924.33923 15.10716,113.74807 -66.649249,-7.1093 88.865659,90.643 95.974897,-87.0884 -71.981179,4.4433 16.88447,-114.63667 z"
+       transform="matrix(0.38658593,0,0,0.38211401,20.193322,622.41963)"
+       id="path3009"
+       style="fill:url(#linearGradient3049);fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter3035)" />
+  </g>
+</svg>

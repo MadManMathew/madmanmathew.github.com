@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<link href="http://fonts.googleapis.com/css?family=Fredericka+the+Great|Open+Sans+Condensed:700" media="screen" rel="stylesheet" type="text/css">
+		<link href="css/template.css" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js">
+</script>
+		<script type="text/javascript" src="js/template.js">
+</script>
+		<style type="text/css">
+		.scrollBox
+		{
+			height:inherit;
+			display:inline-block;
+			overflow-y:scroll;
+			overflow-x: hidden;
+		}
+		</style>
+
+		<title></title>
+	</head>
+	<body>
+		<div id="question">
+			<span class="questionHeader">Question 1</span>
+			<p class="contentText">
+				How many ping pong balls would it take to fill an average-sized school bus? Describe each step in your thought process.
+			</p>
+		</div>
+		<div id="answer" style="height:inherit;" >
+			<div class="contentText scrollBox" >
+				
+					<span class="questionHeader">Answer</span><br/>
+				&nbsp;&nbsp;&nbsp; Assumptions: The engine is in the bus, and any storage compartments and filled. Size of bus and balls are unknown. You cannot crush the ping pong balls<br>
+				<br>
+				&nbsp;&nbsp;&nbsp; Using my last experience of an average sized school bus and my own height as reference to make my best estimation on the total area of the bus. I will then estimate how many pingpong balls are in a cubic foot. <br>
+				Split the insides of the bus in 3 sections. all the seating, the drivers section and the bottom steps. 
+				<img class="imageBorder" src="assets/bus1.png" width="30%"><br>
+				How long is section 1, the seating area?<br>
+				<div style="margin-left:16px;" class="contentText">
+					Using my height as a guide roughly 5'9", from my back to my knees is aprox 2' feet.<br>
+					Last time I was on a school bus my knees hit the from of the seat so 2' feet plus 6" inches for the seat.<br>
+					On average you can fit say 40 people on a school bus, 2 people per seat, 2 seats per row. So 10 rows.<br>
+					&nbsp;&nbsp;&nbsp; 10 * 2.5' = 25'<br>
+				</div>
+				<img  class="imageBorder" src="assets/bus2.png"  width="10%"> <img  class="imageBorder"src="assets/bus3.png" width="20%"><br>
+				How high is the seating area?<br>
+				<div style="margin-left:16px;" class="contentText">
+					People who were taller than 6' feet could not stand straight up, the rest could.<br/>
+				</div>	
+					<br/>
+				How wide is the bus?<br>
+				<div style="margin-left:16px;" class="contentText">
+					a normal bus seats 4 per row and middle section. 1 person with a bit of space would be about 2' feet wide. the aisle part would be about 1 person wide so 5' * 2' = 10' <br>
+				The Volume of the seating area is<br/>
+				(25'*6'*10') = 1500 cubic feet.
+				</div>
+								<br/>
+				Section 2 Drivers Area .<br>
+				<div style="margin-left:16px;" class="contentText">
+					The drivers area length is about 1.5 times the length of a seating area, but only has one seat.<br>
+					(2.5 ) * 1.5 = 3.75'</br>
+					The Volume of the driving area is <br/>
+					3.75'*6*10 = 225 cubic feet;
+					<br/><br/>
+				Volume already occupied by objects in the bus.
+				<div style="margin-left:16px;" class="contentText">
+					The Seats in the bus take up volume that ping pong balls cannot occupy.<br/>
+					Drivers Seat<br/>
+					<div style="margin-left:16px;" class="contentText">
+					For the estimation we will say the volume of the drivers seat would be roughly the size of Section 3, the extra space for the stairs.</br>
+					</div>
+					Passenger Seats<br/>
+					<div style="margin-left:16px;" class="contentText">
+					So we estimate 6" inches for the length of the back portion of the seat. The back of the seat only goes half way to the roof, but there is also padding for the portion you sit on. We will estimate that the padding from the back and sitting portion would be 6"inches from the floor to the roof.<br>
+					The seats are only on 4/5 of the bus so<br>
+					(10 * .5') * ((4/5)*10)  * (6) = 240 cubic feet
+					</div>
+					
+				</div><br/>
+				Total volume in the bus in cubic feet.
+				<div style="margin-left:16px;" class="contentText">
+					VolumeOfSection1 - SeatingVolume + VolumeOfSection2 + (VolumeSection3 - DriverSeatVol) = totalVolume <br/>
+					1500 - 240 + 225 + 0 = 1485 cubic feet.
+				</div>
+				<br/>
+				How many ping pong balls fit in a cubic foot?
+					<div style="margin-left:16px;" class="contentText">
+			    A ping pong balls is roughly 1.5 inches in diameter. When packing the ping pong balls in a cube there will be space in between, more than if they were liquid and less than as if they were perfect cubes, so we take an average of the Upper and Lower bound.	<br/>
+				Upper Bound where there no space between the balls<br/>	
+				(4/3)*pi*(1.5"/2)^3 ~= 1.8" cubed inches<br/>
+				Lower Bound is they are all cubes<br/>
+				12"*12"*12" /(1.8") = 960 ping pong balls<br/>
+				12"*12"*12"/(1.5"^3) = 512 ping pong balls<br/>
+				
+				If we take the average (960+512)/2 = 736 ping pong balls per cubic foot.</br>
+				</div>
+				
+				 <br/>
+				<div style="margin-left:16px;font-size:22px" class="contentText">
+				<b>(1485)*736 =~ 1,100,000</b><br/>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

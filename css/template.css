@@ -1,0 +1,130 @@
+
+body {
+background: #515151;
+}
+#leftPanel {
+float: left;
+width: 25%;
+display: inline;
+background-color: #FFFFFF;
+height: inherit;
+box-sizing: border-box;
+-moz-box-sizing:border-box; /* Firefox */
+-webkit-box-sizing:border-box; /* Safari */
+margin-bottom: inherit;
+padding:2%;
+}
+
+#mainContent {
+float: left;
+width: 75%;
+display: inline-block;
+background-color: #EEEEEE;
+height: inherit;
+border-left: 2px solid;
+border-right: 2px solid;
+box-sizing: border-box;
+-moz-box-sizing:border-box; /* Firefox */
+-webkit-box-sizing:border-box; /* Safari */margin-bottom: inherit;
+padding:2%;
+
+}
+
+
+#headerPanel {
+margin-top: 0px;
+margin-left: auto;
+width: 100%;
+box-sizing: border-box;
+display: inline-block;
+border: 2px solid;
+border-radius: 25px 25px 0px 0px;
+background: #FFFFFF;
+}
+#menu {
+margin-top: 0px;
+margin-left: auto;
+width: 100%;
+box-sizing: border-box;
+display: inline-block;
+border: 2px solid;
+background: #00B4FF;
+}
+#mid {
+height: 100%;
+width: 100%;
+box-sizing: border-box;
+display: inline;
+border-style: solid;
+border-width: 0px 2px 2px 2px;
+margin-bottom: 0px;
+margin-top: auto;
+}
+#midborder {
+box-sizing: border-box;
+display: block;
+border-style: solid;
+border-width: 0px 2px 2px 2px;
+width: 100%;
+}
+#bod {
+width: 80%;
+display: block;
+margin: auto;
+margin-top: 15px;
+box-sizing: border-box;
+min-width: 800px;
+min-height: 600px;
+}
+#frame {
+width: 100%;
+height: 100%;
+display: inline-block;
+border: 0px none;
+margin: auto;
+padding: 0;
+}
+
+#codeText {
+font-family: 'Open Sans Condensed', sans-serif;
+color: #1A1A1A;
+font-size: 120px;
+text-transform: uppercase;
+}
+.questionHeader
+{
+	font-size:26px;
+	font-family: 'Fredericka the Great', cursive;
+}
+.contentText 
+{
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+.menua {
+font-family: 'Open Sans Condensed', sans-serif;
+color: #1A1A1A;
+font-size: 22px;
+text-decoration: none;
+}
+.menua:hover {
+color: #515151;
+}
+.menua:active,link {
+color: #FFFFFF;
+}
+
+
+#fooText {
+font-family: 'Fredericka the Great', cursive;
+color: #3E3E3E;
+font-size: 130px;
+}
+#codeFoo {
+margin: auto;
+width: 90%;
+}
+.imageBorder
+{
+border: 5px groove #00B4FF;
+padding:3px;
+}

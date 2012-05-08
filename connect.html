@@ -1,0 +1,687 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js">
+</script>
+		<script type="text/javascript">
+var isRedTurn = true;
+var gameBoardArray = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
+var gameBoardCount = [0, 0, 0, 0, 0, 0, 0, 0];
+var lastI = 0;
+var lastJ = 0;
+var winingPeiceR = 0;
+var winningStopOpp = 0;
+var winingPositions;
+var jScriptException = false;
+
+
+function Position(i, j)
+ {
+    this.i = i;
+    this.j = j;
+}
+
+function GameNode(type,depth, board)
+{
+	this.hOffence = 0;
+	this.hDefence = 0;
+	this.peiceType = type;
+	this.depth = depth;
+	this.hTotal = 0;
+	this.j = -1;
+	this.nextPeiceType = function()
+	{
+		return this.peiceType == 2 ? 1 : 2; 
+	};
+	this.gameBoard = copyGameBoardArray(board);
+	this.hScore = function()
+	{
+		return this.hOffence * .6 + this.hDefence * .4;
+	};
+	this.printGameBoard = function()
+	{
+		var i = 0;
+		var j = 0;
+		var out = ""
+		for(i=6; i >-1; i--)
+		{
+			for(j=0; j<7; j++)
+				out+=this.gameBoard[i][j]+",";
+			out+="\n";
+		}
+		return out;
+	};
+}
+
+
+function HeuristicResult(continuousCount, blockedCount, posArray,endsEmpty)
+ {
+    this.continuousCount = continuousCount;
+    this.blockedCount = blockedCount;
+    this.posArray = posArray
+    this.endsEmpty = endsEmpty;
+    this.getPosArrayLength = function()
+    {
+        return this.posArray.length;
+    };
+    this.getH = function() {
+        var l = this.posArray.length;
+        if (blockedCount < 4)
+        	return 0;
+        if (l >= 3)
+		{
+			if(this.endsEmpty>=2)
+				return l*15;
+        	return l * 8;
+		}
+        else if (l == 2)
+        	return l * 4;
+        else
+        	return 0;
+    };
+}
+
+function circleAnimation()
+ {
+    if (winingPeiceR > 50 || jScriptException == true)
+    {
+        showWinningDialog(true);
+        return;
+    }
+
+    $(winingPositions).each(function(i, pos)
+    {
+        try
+        {
+            var iframeContents = $('#gamecell' + pos.i + '_' + pos.j).find('iframe').contents();
+            var rStr = $(iframeContents).find('circle').attr("r");
+            var oppStr = $(iframeContents).find('stop[id="radStop"]').css("stop-opacity");
+            var currentR = parseFloat(rStr.replace('%', ''));
+            winingPeiceR = currentR + .5;
+            var currentOpp = parseFloat(oppStr);
+            winningStopOpp = currentOpp + .05;
+            $(iframeContents).find('circle').attr("r", winingPeiceR + "%");
+            $(iframeContents).find('stop[id="radStop"]').css("stop-opacity", winningStopOpp.toString());
+        }
+        catch(e)
+        {
+            jScriptException = true;
+        }
+    });
+
+    window.setTimeout("circleAnimation()", 50);
+}
+
+function allowDrop(ev)
+ {
+    ev.preventDefault();
+}
+
+function drag(ev)
+ {
+    ev.dataTransfer.setData("kind", ev.target.id);
+}
+
+function toggleTurn()
+ {
+    if (isRedTurn == true)
+    {
+        isRedTurn = false;
+        $("#blackpeice, #userAILink").css("visibility", "visible");
+        $("#redpeice").css("visibility", "hidden");
+    }
+    else
+    {
+        isRedTurn = true;
+        $("#blackpeice, #userAILink").css("visibility", "hidden");
+        $("#redpeice").css("visibility", "visible");
+
+    }
+}
+
+function testCell(i, j, gameBoard)
+ {
+    var testResult = testDirection(i, j, 1, 0, gameBoard);
+    if (testResult == null)
+    testResult = testDirection(i, j, 0, 1, gameBoard);
+    if (testResult == null)
+    testResult = testDirection(i, j, 1, 1, gameBoard);
+    if (testResult == null)
+    testResult = testDirection(i, j, 1, -1, gameBoard);
+
+    return testResult;
+
+}
+
+function testDirection(i, j, x, y, gameBoard)
+ {
+    var result = getDirectionLength(i, j, x, y, gameBoard);
+    if (result.length >= 4)
+    return result;
+
+    return null;
+}
+
+function getDirectionLength(i, j, x, y, gameBoard)
+ {
+    var currentPeiceType = gameBoard[i][j];
+    var result = [new Position(i, j)];
+
+    var xLeft = j - x;
+    var xRight = j + x;
+    var yUp = i + y;
+    var yDown = i - y;
+
+    while (yUp > -1 && xRight > -1 && yUp < 7 && xRight < 7 && gameBoard[yUp][xRight] == currentPeiceType)
+    {
+        result.push(new Position(yUp, xRight));
+        xRight += x;
+        yUp += y;
+    }
+
+    while (yDown > -1 && xLeft > -1 && yDown < 7 && xLeft < 7 && gameBoard[yDown][xLeft] == currentPeiceType)
+    {
+        result.push(new Position(yDown, xLeft));
+        xLeft -= x;
+        yDown -= y;
+    }
+    return result;
+}
+
+function getHeuristicResult(i, j, x, y, gameBoard)
+ {
+    var currentPeiceType = gameBoard[i][j];
+    var result = [new Position(i, j)];
+    var continuousCount = 1;
+    var blockedCount = 1;
+
+    var xLeft = j - x;
+    var xRight = j + x;
+    var yUp = i + y;
+    var yDown = i - y;
+
+	var endsEmpty = 0;
+
+    var continuous = true;
+    while (yUp > -1 && xRight > -1 && yUp < 7 && xRight < 7 &&
+    (gameBoard[yUp][xRight] == currentPeiceType || (gameBoard[yUp][xRight] == 0 && Math.abs(yUp - i) < 4 && Math.abs(xRight - j) < 4)))
+    {
+        if (gameBoard[yUp][xRight] == currentPeiceType)
+        result.push(new Position(yUp, xRight));
+        else
+        	continuous = false;
+
+        if (continuous == true)
+        continuousCount++;
+        blockedCount++;
+        xRight += x;
+        yUp += y;
+    }
+
+	if(gameBoard[yUp-y][xRight-x] == 0 && yUp-y == getNextI(xRight-x,gameBoard))
+		endsEmpty++;
+
+    continuous = true;
+    while (yDown > -1 && xLeft > -1 && yDown < 7 && xLeft < 7 &&
+    (gameBoard[yDown][xLeft] == currentPeiceType || (gameBoard[yDown][xLeft] == 0 && Math.abs(yDown - i) < 4 && Math.abs(xLeft - j) < 4)))
+    {
+        if (gameBoard[yDown][xLeft] == currentPeiceType)
+        result.push(new Position(yDown, xLeft));
+         else
+        	continuous = false;
+        if (continuous == true)
+        continuousCount++;
+
+        blockedCount++;
+        xLeft -= x;
+        yDown -= y;
+    }
+	if(gameBoard[yDown+y][xLeft+x] == 0 && yDown+y == getNextI(xLeft+x,gameBoard))
+		endsEmpty++;
+		
+    return new HeuristicResult(continuousCount, blockedCount, result,endsEmpty);
+}
+
+function useAI()
+ {
+    var j = 0;
+    var max = 0;
+    var pickedPos = 0;
+    var peiceType = 2;
+    //black
+    for (j = 0; j < 7; j++)
+    {
+        if (gameBoardCount[j] < 7)
+		{
+        	var h = getHuristicScore(gameBoardCount[j], j, copyGameBoardArray(gameBoardArray));
+        	if (max < h)
+        	{
+            	max = h;
+            	pickedPos = j;
+        	}
+		}
+    }
+    placePeice(peiceType, gameBoardCount[pickedPos], pickedPos);
+}
+var finalNodes = [];
+
+function useAI2()
+ {
+	
+    bestThree(new GameNode(1,0,gameBoardArray)); 
+	var top3Score = []
+	var l = 0;
+	for(l = 0; l < finalNodes.length; l++)
+	{
+		//alert("Final:" + finalNodes[l].hTotal + ": " + finalNodes[l].j + "\n  "+finalNodes[l].printGameBoard());
+		if(top3Score.length<3)
+		{
+				top3Score.push(finalNodes[l]);
+		}
+		else
+		{
+			for(var i = 0; i < 3;i++)
+			{
+
+				var j = 0;
+				for(j = 0; j<3; j++)
+				{
+					if(finalNodes[l].hTotal > top3Score[j].hTotal)
+					{
+						top3Score[j] = finalNodes[l];
+						break;
+					}
+				}
+			}
+		}
+	}
+	var x = 0;
+	var chooseJ = -1;
+	var maxScore = -10000;
+	for(x = 0; x<top3Score.length; x++)
+	{
+		if(top3Score[x].hTotal>maxScore)
+		{
+			maxScore = top3Score[x].hTotal;
+			chooseJ = top3Score[x].j; 
+		}
+		else if(chooseJ == top3Score[x].j)
+		{
+			maxScore+=top3Score[x].hTotal;
+		}
+	}
+	placePeice(2, gameBoardCount[chooseJ], chooseJ);
+	finalNodes = [];
+}
+
+function bestThree(heur)
+{
+	
+	console.log("start:" + heur.printGameBoard());
+	if(heur.hOffence == 100 || heur.hDefence == 100)
+	{
+		finalNodes.push(heur);
+		return;
+	}
+	if(heur.depth>5)
+	{
+		finalNodes.push(heur);
+		return;		
+	}
+		
+	var threeBest= [];
+	var j = 0;
+	for (j = 0; j < 7; j++)
+    {
+		var i = getNextI(j,heur.gameBoard);
+        if (i < 7)
+        {
+			var newHeur = new GameNode(heur.nextPeiceType(),heur.depth+1,heur.gameBoard);
+			newHeur.j = heur.j == -1 ? j : heur.j;
+			
+			newHeur.hOffence =  getRowHuristics(newHeur.peiceType, i, j, newHeur.gameBoard);
+		    newHeur.hDefence =  getRowHuristics(newHeur.nextPeiceType(), i, j, newHeur.gameBoard);
+			newHeur.gameBoard[i][j] = newHeur.peiceType;
+		
+			newHeur.hTotal = heur.hTotal + ((newHeur.peiceType == 2? 1 : -1)*newHeur.hScore() / newHeur.depth);
+			
+
+			if(newHeur.peiceType==2)
+			{
+		   	 if(threeBest.length<3)
+					threeBest.push(newHeur);
+				else
+				{
+					var x = 0;
+					for(x = 0; x<3; x++)
+					{
+						if(newHeur.hScore() > threeBest[x].hScore())
+						{
+							threeBest[x] = newHeur;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				if(threeBest.length==0)
+				{
+					threeBest.push(newHeur);
+				}
+				else if(newHeur.hScore() > threeBest[0].hScore())
+				{
+					threeBest[0] = newHeur;
+				}
+			}
+		}
+    }
+	//console.log(threeBest[0].hScore()+ " " + threeBest[1].hScore() + " " + threeBest[2].hScore());
+	var y = 0;
+	for(y = 0; y < threeBest.length; y++)
+	{
+		//console.log("Depth:" + threeBest[y].depth);
+		//console.log("end:" + threeBest[y].printGameBoard());
+		
+		bestThree(threeBest[y]);
+	}
+
+}
+function getNextI(j,gameBoard)
+{
+	var i = 0;
+	while(i < 7 && gameBoard[i][j]!=0)
+	{
+		i++;
+	}
+	
+	console.log(i+ "-"+j);
+	return i;
+}
+
+
+function getHuristicScore(i, j, gameBoard)
+ {
+    var offensive = getRowHuristics(2, i, j, gameBoard);
+    var defensive = getRowHuristics(1, i, j, gameBoard);
+
+    console.log('offensive:' + offensive + 'defensive:' + defensive);
+    return offensive * .6 + defensive * .4;
+}
+
+function copyGameBoardArray(gameBoard)
+{
+  	var newGameBoard = [];
+    for (x = 0; x < 7; x++)
+    	newGameBoard[x] = gameBoard[x].slice(0);
+	return newGameBoard;
+}
+
+function getRowHuristics(peiceType, i, j, gameBoard)
+ {
+    var hScore = 0;
+    var gameBoardCopy = copyGameBoardArray(gameBoard);
+    var x = 0;
+    gameBoardCopy[i][j] = peiceType;
+
+    var countUpDown = getHeuristicResult(i, j, 1, 0, gameBoardCopy);
+    var countLeftRight = getHeuristicResult(i, j, 0, 1, gameBoardCopy);
+    var countRightDown = getHeuristicResult(i, j, 1, 1, gameBoardCopy);
+    var countRightUp = getHeuristicResult(i, j, 1, -1, gameBoardCopy);
+
+
+    //100 is game over heuristic score
+    if (countUpDown.continuousCount >= 4 || countLeftRight.continuousCount >= 4 ||
+    countRightDown.continuousCount >= 4 || countRightUp.continuousCount >= 4)
+    return 100;
+
+    hScore += countUpDown.getH();
+    hScore += countLeftRight.getH();
+    hScore += countRightDown.getH();
+    hScore += countRightUp.getH();
+
+    if (j < 4)
+    hScore += j;
+    else
+    hScore += (6 - j);
+    return hScore;
+}
+
+
+function drop(ev)
+ {
+    var data = ev.dataTransfer.getData("kind");
+    var targetCell = ev.target.id != '' ? ev.target.id: $(ev.target).parent().attr('id');
+    var i = 0;
+    var j = 0;
+    var peiceType = 0;
+    if (data == "blackpeice")
+    peiceType = 2;
+    else if (data == "redpeice")
+    peiceType = 1;
+
+    j = parseInt(targetCell.substring(targetCell.length - 1, targetCell.length));
+    i = gameBoardCount[j];
+    placePeice(peiceType, i, j);
+
+    ev.preventDefault();
+	if(peiceType == 1 && $('input:#autoAI').attr("checked") == "checked")
+		window.setTimeout("useAI2()", 500);
+
+}
+
+function placePeice(peiceType, i, j)
+ {
+    if (i > 5)
+    {
+        $('#placecell' + j).removeAttr("ondrop");
+        $('#placecell' + j).removeAttr("ondragover");
+        $('#placecell' + j).children().css("visibility", "hidden");
+
+    }
+    gameBoardCount[j]++;
+    var svgStr = '<iframe type="image/svg+xml" onload="afterPlaced()"  class="gamepeice"  src="assets/' + (peiceType == 2 ? 'black': 'red') + '.svg"><\/iframe>';
+    $('#gamecell' + i + '_' + j).append(svgStr);
+    gameBoardArray[i][j] = peiceType;
+
+    lastI = i;
+    lastJ = j;
+	var rowFullCount = 0;
+	for(x = 0 ; x < 7; x++)
+	{
+		if(gameBoardCount[x] <7)
+			break;
+		if(x==6)
+			showWinningDialog(false);		
+	}
+	resize_template();
+}
+
+function afterPlaced()
+ {
+    toggleTurn();
+    resize_template();
+    var testResult = testCell(lastI, lastJ, gameBoardArray);
+    if (testResult != null)
+    {
+        winingPositions = testResult;
+        circleAnimation();
+
+    }
+}
+
+function showWinningDialog(isWin)
+ {
+    $("#winDialog").appendTo("#mainDiv");
+	if(isWin ==  true)
+	{
+    	$("#winDialog").append("<div id='winText' >" + (isRedTurn == false ? "Red": "Black") + " Wins <div style='font-size:22px'>Click to Restart</div></div>");
+	    $("#winText").css('background-color', 'rgba(' + (isRedTurn == false ? "256,0,0": "0,0,0") + ', 0.7)');
+
+	}
+	else
+	{
+			$("#winDialog").append("<div id='winText' > Draw <div style='font-size:22px'>Click to Restart</div></div>");
+			$("#winText").css('background-color', 'rgba(100,100,100, 0.7)');
+		    
+	}
+    $("#winDialog").css('z-index', '100');
+}
+
+function on_doc_ready()
+ {
+    var i,
+    j = 0;
+    for (i = 7; i >= 0; i--)
+    {
+        $('#gametable').append('<tr id="gamerow' + i + '" class="gamerow"><\/tr>');
+
+        for (j = 0; j < 7; j++)
+        {
+            if (i == 7)
+            {
+                $('#gamerow' + i).append('<td id="placecell' + j + '" class="placecell" ondrop="drop(event)" ondragover="allowDrop(event)">\
+								<img class="downarrow" draggable="false" src="assets/downArrow.svg"><\/img>\
+							<\/td>');
+            }
+            else
+            {
+                $('#gamerow' + i).append('<td id="gamecell' + i + '_' + j + '" class="gamecell" >\
+							<\/td>');
+            }
+        }
+    }
+
+    resize_template();
+}
+
+function resize_template()
+ {
+    var windowHeight = $(window).height() * .8;
+
+    $(".gamecell, .gameslot, .placecell").height(windowHeight * .12);
+
+    $(".gamepeice").height(windowHeight * .11);
+    $(".downarrow").height(windowHeight * .08);
+
+}
+$(document).ready(on_doc_ready);
+$(window).resize(resize_template);            
+		</script>
+		<style type="text/css">
+
+		.gamecell
+		{
+
+		box-sizing: border-box;
+		-moz-box-sizing:border-box; /* Firefox */
+		-webkit-box-sizing:border-box; /* Safari */
+		display: inline-block;
+		border:2px solid;
+		width:14%;
+		padding:0px;
+
+		}
+
+		.placecell
+		{
+		box-sizing: border-box;
+		-moz-box-sizing:border-box; /* Firefox */
+		-webkit-box-sizing:border-box; /* Safari */
+		display: inline-block;
+		border:none;
+		width:14%;
+		padding:15px;
+
+		}
+
+		.downarrow
+		{
+		box-sizing: border-box;
+		-moz-box-sizing:border-box; /* Firefox */
+		-webkit-box-sizing:border-box; /* Safari */
+		display: inline-block;
+		width:100%;
+		border: none;
+
+		}
+
+		.gamepeice
+		{
+		
+		box-sizing: border-box;
+		-moz-box-sizing:border-box; /* Firefox */
+		-webkit-box-sizing:border-box; /* Safari */
+		display: inline-block;
+		width:100%;
+		border: none;
+
+		}
+		.gameslot
+		{
+
+		width:40%;
+		border: none;
+		box-sizing: border-box;
+		-moz-box-sizing:border-box; /* Firefox */
+		-webkit-box-sizing:border-box; /* Safari */
+
+		}
+		#winText
+		{
+			margin:auto;
+			font-size:100px;
+			text-align:center;
+			border-radius: 25px 25px 25px 25px;
+			border:solid;
+			margin-top:20%;
+			width:80%;
+			
+		}
+		#winDialog
+		{
+			z-index:-100;
+			position:absolute;
+			top:0%;
+			left:0%;
+			bottom:0%;
+			right:0%;
+			background-color:rgba(256, 256, 256, 0.6);
+		}
+		</style>
+		<title></title>
+	</head>
+	<body>
+		<div>
+			<table width="100%" style="font-weight:bold;font-size:20px;">
+				<tr>
+					<td width="20%">
+						Red
+					</td>
+					<td width="20%">
+						<div id="redpeice"  draggable="true" ondragstart="drag(event)"  class="gameslot">
+							<img id="redpeice" src="assets/red.svg" name="redpeice">
+						</div>	
+					</td>
+					<td width="20%">
+						Black
+					</td>
+					<td width="20%">			
+						<div id="blackpeice"  draggable="true" ondragstart="drag(event)" style="visibility:hidden;" class="gameslot">
+							<img id="blackpeice" src="assets/black.svg" name="blackpeice"> 
+						</div>
+					</td>
+					<td width="20%" >
+						<button onclick="javascript:useAI2();" style="visibility:hidden;" id="userAILink">Use AI</button>
+						<input id="autoAI" type="checkbox">Auto</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="mainDiv">
+			<table id="gametable" width="100%" style="padding:0px;" cellspacing="0"></table>
+		</div>
+		<div id="winDialog" onclick="javascript:location.reload()"></div>
+	</body>
+</html>
