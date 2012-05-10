@@ -1,0 +1,445 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	//initialize for some reason
+	$('.insideContainer').css("width","auto");
+	$('.insideContainer').css("height","auto");
+	changeParentWithVal(25,'margin')
+	changeParentWithVal(25,'border');
+	changeParentWithVal(25,'padding');
+	
+});
+
+function getSelector(sel)
+{
+	var n = parseInt($("select").val());
+	if(n == 0)
+		return sel;
+	else
+	{
+		
+		return sel +":nth-child("+n+")"
+	}
+}
+function changePos(event)
+{
+	changePosWithVal(event.target.value);
+}
+function changePosWithVal(val)
+{
+	var val = val; 
+	if(val == 'ra')
+	{	
+		$(".parentDiv").css("position","relative");
+		$(getSelector(".postionContainer")).css("position","absolute");
+	}
+	else
+	{
+		$(getSelector(".postionContainer")).css("position",val);
+		$(".parentDiv").css("position","static");
+		
+	}
+	onModify();
+}
+
+function changeDisplay(event)
+{
+	$(getSelector(".displayContainer")).css("display",event.target.value);
+	onModify();
+}
+
+
+function changeFloat(event)
+{
+	$(getSelector(".floatContainer")).css("float",event.target.value);
+	$(getSelector(".clearContainer")).css("clear",event.target.value);
+	onModify();
+}
+
+function changeClear(event)
+{
+	$(getSelector(".floatContainer")).css("clear",event.target.value);
+	onModify();
+}
+
+
+function changeAutoOrValue(sel,event)
+{
+	var id = event.target.name; 
+	var property;
+	var units="";
+	if(id.indexOf('Rad') > -1	)
+	{
+		units = getUnits(id.replace('Rad',''));
+		property = id.replace('Rad','').replace('Child','');			
+		if(event.target.checked == true )
+		{
+			$(sel).css(property,event.target.value);	
+		}	
+		else
+		{
+			id= id.replace('Rad','');
+			var val = parseInt($('input[name="' + id + '"]').val());		
+			$(sel).css(property,val + units);
+		}
+	}
+	else if(id.indexOf('unit') > -1 )
+	{
+		id = id.replace('unit','');	
+		if($('input[name="' + id + 'Rad"]').attr("checked") == false)
+		{
+			property = id.replace('Child','');	
+			var val = parseInt($('input[name="' + id + '"]').val());		
+			units = getUnits(id);
+			$(sel).css(property,val + units);
+		}
+	}
+	else if($('input[name="' + id + 'Rad"]').attr("checked") == false)
+	{
+		var val = parseInt(event.target.value);		
+		units = getUnits(id);
+		property = id.replace('Child','');	
+		$(sel).css(property,val + units);
+		
+	}
+	onModify();
+}
+
+function getUnits(id)
+{
+	if(id.indexOf('width') > -1 || id.indexOf('height') > -1)
+			return $('input[name="' + id + 'unit"]:checked').val();
+	return "";
+}
+
+function changeLTRB(event)
+{
+ changeAutoOrValue(getSelector(".locationContainer"),event);
+}
+function changeChildSize(sel,event)
+{
+ changeAutoOrValue(getSelector(sel),event);
+}
+function changeSize(sel,event)
+{
+ changeAutoOrValue(sel,event);
+}
+
+//Parent stuff
+function changeParent(event,property)
+{
+	changeParentWithVal(event.target.value,property);
+}
+function changeParentWithVal(val,property)
+{
+	var val = val + "px";
+	if(property=='border')
+		val = "solid #999999 " + val;  
+	$(".parentDiv").css(property,val);
+	var textSelector =  "#" + property + "Text";
+	$(textSelector).html(property + ": " + val);
+	modifyText();
+	onModify();
+	
+}
+function changeBoxSizing(event)
+{
+	$(".parentDiv").css("-webkit-box-sizing:",event.target.value);
+	$(".parentDiv").css("-moz-box-sizing",event.target.value);
+	$(".parentDiv").css("box-sizing",event.target.value);
+	onModify();
+}
+function changeBoxChildSizing(event)
+{
+	$(getSelector(".mainContainer")).css("-webkit-box-sizing:",event.target.value);
+	$(getSelector(".mainContainer")).css("-moz-box-sizing",event.target.value);
+	$(getSelector(".mainContainer")).css("box-sizing",event.target.value);
+	onModify();
+}
+function changeOverflow(event)
+{
+	$(".parentDiv").css("overflow",event.target.value);
+	onModify();
+}
+//AddRemove container stuff
+function addContainer()
+{
+	$(".mainContainer:first-child").clone().appendTo('.parentDiv');
+	var count = $(".mainContainer").length;
+	$("select").append('<option value="'+ count +'">'+count+'</option>');
+	onModify();
+}
+function removeContainer()
+{
+	if($(".mainContainer").length > 1)
+	{
+		$(".mainContainer:last-child").remove();
+		$("select option:last-child").remove();
+	}
+}
+function onModify()
+{
+	$(".mainContainer").each(function(i,e)
+	{
+		var text = "<div style='display:inherit';>Child <b>"+ (i + 1) +"</b> </div>";
+		text+="<div style='display:inherit';>position: <b>" + $(e).css("position") + "</b> </div>";
+		text+="<div style='display:inherit'>left: <b>" + $(e).css("left") + "</b>";
+		text+=", top: <b>" + $(e).css("top")+ "</b></div>";
+		text+=" <div style='display:inherit'>right: <b>" + $(e).css("right")+ "</b>";
+		text+=",bottom: <b>" + $(e).css("bottom") + "</b> </div>";
+		text+="<div style='display:inherit'>float: <b>" + $(e).css("float") + "</b>";
+		text+=", clear: <b>" + $(e).css("clear") + "</b> </div>";
+		text+="<div style='display:inherit'>display: <b>" + $(e).css("display") + "</b> </div>";
+		text+="<div style='display:inherit'>overflow: <b>" + $(e).css("overflow") + "</b> </div>";
+		text+="<div style='display:inherit'>width: <b>" + $(e).css("width") + "</b> </div>";
+		text+="<div style='display:inherit'>height: <b>" + $(e).css("height") + "</b> </div>";
+		$(e).html(text);	
+	});
+}
+
+function changeChild(event)
+{
+	var n = parseInt($("select").val());
+	if(n==0)
+		n=1;
+	var sel = ".mainContainer" +":nth-child("+n+")";
+	$("input[name='position'][value='"+$(sel).css('position')+"']").attr('checked',true);
+	$("input[name='display'][value='"+$(sel).css('display')+"']").attr('checked',true);
+	$("input[name='float'][value='"+$(sel).css('float')+"']").attr('checked',true);
+	$("input[name='clear'][value='"+$(sel).css('clear')+"']").attr('checked',true);
+	resetChildWidthHeightLTRB(sel,'width');
+	resetChildWidthHeightLTRB(sel,'height');
+	resetChildWidthHeightLTRB(sel,'left');
+	resetChildWidthHeightLTRB(sel,'top');
+	resetChildWidthHeightLTRB(sel,'right');
+	resetChildWidthHeightLTRB(sel,'bottom');
+
+
+}
+
+function resetChildWidthHeightLTRB(sel,property)
+{
+	if($(sel).css(property)=='auto')	
+		$("input[name='"+property+"ChildRad']").attr('checked',true);
+	else
+	{
+	$("input[name='"+property+"ChildRad']").attr('checked',false);
+
+		var  numVal = $(sel).css(property).replace('px','').replace('%','');
+		if($(sel).css(property).indexOf('px')>-1)
+			$("input[name='"+property+"Childunit'][value='px']").attr('checked',true);
+		else if($(sel).css(property).indexOf('%')>-1)
+			$("input[name='"+property+"Childunit'][value='%']").attr('checked',true);
+		
+		$("input[name='"+property+"Child']").val(numVal);
+	}
+}
+
+
+
+function modifyText()
+{
+	
+	var top = 0;
+	var left = 10;
+	$(".overlay").children().each(function (i,e)
+	{
+		$(e).css("top",top+"px");
+		$(e).css("left",left+"px");
+		var attr = "margin";
+		if(i==1)
+			attr = "border";
+		else if(i==2)
+			attr = "padding";
+		
+		var curTop = parseInt($(".parentDiv").css(attr));
+		var curLeft = parseInt($(".parentDiv").css(attr));
+		if(curTop < 14)
+			$(e).css("visibility","hidden");
+		else
+			$(e).css("visibility","visible");
+		top+=curTop;
+		left+=curLeft;
+		
+	});
+}
+
+</script>
+<style type="text/css">
+
+.parentDiv{
+	position:static;
+	border:solid 25px #999999;
+	padding:25px;
+	margin:25px;
+	background-color:#CCCCCC;
+}
+
+.overlay
+{
+	position:absolute;
+	font-family:courier;
+	font-size:14px;
+	top:0px;left:0px;
+}
+
+.insideContainer
+{
+	width:auto;
+	height:auto;
+	padding:10px;
+	background-color:white;
+	border:1px solid;
+	font-family:courier;
+	font-size:14px;
+	left:auto;
+	top:auto;
+	
+}
+
+.postionContainer
+{
+	position:static;
+}
+
+.displayContainer
+{
+	display:block;
+}
+
+  </style>
+</head>
+<body>
+
+	<div class="overlay">
+		<span id="marginText" style="position:absolute;width:400px"></span>
+		<span id="borderText" style="position:absolute;width:400px"></span>
+		<span id="paddingText" style="position:absolute;width:400px"></span>
+		
+	</div>
+			<div class="parentDiv">
+					<!--div class=" postionContainer displayContainer clearContainer"
+					 		style="background-color:red;width:20px;font-size:12px;height:20px;top:-10px;left:-10px;z-index:100;">
+							<div style="margin:auto">0,0</div>
+					</div-->
+					<div  class="mainContainer postionContainer insideContainer locationContainer displayContainer floatContainer"></div>
+					
+			</div>
+	<div style="background-color:#DDDDDD;clear:both;height:320px;padding:10px;border:inset grey 4px;position:relative;bottom:2;left:2;
+	box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border:box;min-width:800px;width:95%">
+	<div><span style="font-family:courier;font-size:24px;font-weight:bold">Ultimate HTML CSS Layout Demo</span></div>
+		<div  style="float:left">
+		Parent
+		<div style="padding-left:20px">
+		<div> Width:
+			<input type="checkbox" checked="checked" name="widthRad" value="auto" onclick="changeSize('.parentDiv',event)"/> auto or
+			<input type="text" name="width" size="4" value="400" onchange="changeSize('.parentDiv',event)"/>
+			<input type="radio" checked="checked" name="widthunit" value="px" onclick="changeSize('.parentDiv',event)"/>px
+		    <input type="radio" name="widthunit" value="%" onclick="changeSize('.parentDiv',event)"/>%</div>
+			
+			<div> Height:
+				<input type="checkbox" checked="checked" name="heightRad" value="auto" onclick="changeSize('.parentDiv',event)"/> auto or
+				<input type="text" name="height" size="4" value="200" onchange="changeSize('.parentDiv',event)"/>				
+				<input type="radio" checked="checked" name="heightunit" value="px" onclick="changeSize('.parentDiv',event)"/>px
+			    <input type="radio" name="heightunit" value="%" onclick="changeSize('.parentDiv',event)"/>%</div>
+			<div>
+			<span> Box-Sizing: <input type="radio" checked="checked" name="boxSizing" value="content-box" onclick="changeBoxSizing(event)"/>content-box</span>
+				<span>  <input type="radio" name="boxSizing" value="border-box" onclick="changeBoxSizing(event)"/>border-box</span>
+			</div>
+			<div>
+			<span> Overflow: <input type="radio" checked="checked" name="overflow" value="visible" onclick="changeOverflow(event)"/>visible</span>
+					<span>  <input type="radio" name="overflow" value="hidden" onclick="changeOverflow(event)"/>hidden</span>
+					<span>  <input type="radio" name="overflow" value="scroll" onclick="changeOverflow(event)"/>scroll</span>
+			</div>
+			
+		<div>
+			<div> margin: <input id="marginRange" type="range" min="0" max="50" value="25" onchange="changeParent(event,'margin')"/></div>
+			<div> Border: <input id="borderRange"  type="range" min="0" max="50" value="25" onchange="changeParent(event,'border')"/></div>
+			<div> Padding: <input id="paddingRange"  type="range" min="0" max="50" value="25" onchange="changeParent(event,'padding')"/></div>
+		
+		</div>
+		</div>
+		</div>
+		<div style="float:left">
+		Child
+		<select onchange="changeChild(event)">
+		  <option value="0">all</option>
+		  <option value="1">1</option>
+		</select>
+	
+		<div style="padding-left:40px">
+		<div>
+				<span> Position: <input type="radio" checked="checked" name="position" value="static" onclick="changePos(event)"/>static</span>
+				<span>  <input type="radio" name="position" value="relative" onclick="changePos(event)"/>relative</span>
+				<span>  <input type="radio" name="position" value="absolute" onclick="changePos(event)"/>absolute</span>
+				<span>  <input type="radio" name="position" value="ra" onclick="changePos(event)"/>relative-absolute</span>
+				<span>  <input type="radio"  name="position" value="fixed" onclick="changePos(event)"/>fixed</span>
+		
+		</div>
+		<div style="padding-left:20px">
+				<span> left:
+					 <input type="checkbox" checked="checked" name="leftChildRad" value="auto" onclick="changeLTRB(event)"/> auto or
+					 <input type="text" name="leftChild" size="2" value="0" onchange="changeLTRB(event)"/></span>
+				<span> top: 
+					<input type="checkbox" checked="checked" name="topChildRad" value="auto" onclick="changeLTRB(event)"/> auto or
+					<input type="text" name="topChild" size="2" value="0" onchange="changeLTRB(event)"/></span>
+				<div><span> right: 
+					<input type="checkbox" checked="checked" name="rightChildRad" value="auto" onclick="changeLTRB(event)"/> auto or
+					<input type="text" name="rightChild" size="2" value="0" onchange="changeLTRB(event)"/></span>
+				<span> bottom: 
+					<input type="checkbox" checked="checked" name="bottomChildRad" value="auto" onclick="changeLTRB(event)"/> auto or
+					<input type="text" name="bottomChild" size="2" value="0" onchange="changeLTRB(event)"/></span></div>
+		
+		</div>
+		<div>
+				<span> Float: <input type="radio" checked="checked" name="float" value="none" onclick="changeFloat(event)"/>none</span>
+				<span>  <input type="radio" name="float" value="left" onclick="changeFloat(event)"/>left</span>
+				<span>  <input type="radio" name="float" value="right" onclick="changeFloat(event)"/>right</span>
+		
+		</div>
+		<div>
+				<span> Clear: <input type="radio" checked="checked" name="clear" value="none" onclick="changeClear(event)"/>none</span>
+				<span>  <input type="radio" name="clear" value="left" onclick="changeClear(event)"/>left</span>
+				<span>  <input type="radio" name="clear" value="right" onclick="changeClear(event)"/>right</span>				
+				<span>  <input type="radio" name="clear" value="both" onclick="changeClear(event)"/>both</span>
+		
+		</div>
+		<div>
+				<span> Display: <input type="radio" checked="checked" name="display" value="block" onclick="changeDisplay(event)"/>block</span>
+				<span>  <input type="radio" name="display" value="inline" onclick="changeDisplay(event)"/>inline</span>
+				<span>  <input type="radio" name="display" value="inline-block" onclick="changeDisplay(event)"/>inline-block</span>
+				<span>  <input type="radio" name="display" value="none" onclick="changeDisplay(event)"/>none</span>
+		
+		</div>
+		<div> Width:
+			<input type="checkbox" checked="checked" name="widthChildRad" value="auto" onclick="changeChildSize('.mainContainer',event)"/> auto or
+			<input type="text" name="widthChild" size="4" value="400" onchange="changeChildSize('.mainContainer',event)"/>
+								
+				<input type="radio" checked="checked" name="widthChildunit" value="px" onclick="changeChildSize('.mainContainer',event)"/>px
+			    <input type="radio" name="widthChildunit" value="%" onclick="changeChildSize('.mainContainer',event)"/>%</div>
+			<div> Height:
+				<input type="checkbox" checked="checked" name="heightChildRad" value="auto" onclick="changeChildSize('.mainContainer',event)"/> auto or
+				<input type="text" name="heightChild" size="4" value="200" onchange="changeChildSize('.mainContainer',event)"/>
+				<input type="radio" checked="checked" name="heightChildunit" value="px" onclick="changeChildSize('.mainContainer',event)"/>px
+			    <input type="radio" name="heightChildunit" value="%" onclick="changeChildSize('.mainContainer',event)"/>%</div>
+			<span> Box-Sizing: <input type="radio" checked="checked" name="boxSizingChild" value="content-box" onclick="changeBoxChildSizing(event)"/>content-box</span>
+				<span>  <input type="radio" name="boxSizingChild" value="border-box" onclick="changeBoxChildSizing(event)"/>border-box</span>
+	
+		</div>
+		
+	</div>
+		<div style="clear:both">
+				<span> Add/Remove Container: <button onclick="addContainer(event)">Add</button><button onclick="removeContainer(event)">Remove</button></span>
+			<div style="float:right">By Mathew Sam <a href="http://attemptingawesomeness.blogspot.com" >attemptingawesomeness.blogspot.com</a>
+		</div>
+	</div>
+				
+</body>
+</html>
