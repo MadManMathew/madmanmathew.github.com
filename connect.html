@@ -466,8 +466,6 @@ function drop(ev)
     placePeice(peiceType, i, j);
 
     ev.preventDefault();
-	if(peiceType == 1 && $('input:#autoAI').attr("checked") == "checked")
-		window.setTimeout("useAI2()", 500);
 
 }
 
@@ -507,7 +505,11 @@ function afterPlaced()
     {
         winingPositions = testResult;
         circleAnimation();
-
+    }
+    else
+    {
+		if(peiceType == 1 && $('input:#autoAI').attr("checked") == "checked")
+			window.setTimeout("useAI2()", 500);
     }
 }
 
