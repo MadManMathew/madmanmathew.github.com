@@ -10,6 +10,8 @@ $(document).ready(function() {
 	buildMap();
 	
 });
+var isBuildingMap = false;
+var isAnimating = false;
 
 function HexMapNode(x, y)
  {
@@ -60,10 +62,17 @@ function HexMapNode(x, y)
 		var nodeArray = [this.topNode,this.bottomNode,this.leftTopNode,this.rightTopNode,this.leftBottomNode,this.rightBottomNode];
 		for(var i = 0; i < 6; i ++)
 		{
-			if(nodeArray[i]!=null && nodeArray[i].nodesUntilGoal < min)
+			if(nodeArray[i]!=null)
 			{
-				bestNode = nodeArray[i];
-				min = nodeArray[i].nodesUntilGoal;
+				if( nodeArray[i].nodesUntilGoal < min)
+				{
+					bestNode = nodeArray[i];
+					min = nodeArray[i].nodesUntilGoal;
+				}
+				else if( nodeArray[i].nodesUntilGoal == min)
+				{
+					
+				}
 			}
 		}
 	    
@@ -71,13 +80,17 @@ function HexMapNode(x, y)
 	};
 }
 
-var hexMap = [[],[],[],[],[],[],[],[],[],[],[],[]]; 
-var mapHeigtCount = 12;
-var mapWidthCount = 12;
+var hexMap = []; 
+var mapHeigtCount = 16;
+var mapWidthCount = 20;
 var nodeSize = 25;
 var wallPlayerGoal = 'wall';
 function buildMap()
 {
+    for(var x=0; x< mapWidthCount; x++)
+	{
+		hexMap.push([]);
+	}
     for(var i = 0; i <mapHeigtCount; i++)
     {
         for(var j=0; j< mapWidthCount; j++)
@@ -142,11 +155,15 @@ function buildDirectionalMap()
     {
 		var node = goalNodes[i];
 		node.nodesUntilGoal = 0;
+		node.htmlElement.find('.nodesUntilGoalDiv').html("");
 		openSet.push(node);
     }
+var i = 0;
+	var addNeighbours = function()
+	{
 
-        for(var i = 0; i < openSet.length; i++) 
-		{
+        //for(var i = 0; i < openSet.length; i++) 
+		//{
 			var node = openSet[i];
 			if(node!=null)
 			{
@@ -171,50 +188,120 @@ function buildDirectionalMap()
                 
 	            }
 			}
-        }
+			i++;
+			if(i< openSet.length)
+		    	window.setTimeout(addNeighbours, 20);
+			else
+			{
+				isBuildingMap = false;
+				$("#animateButton").attr("disabled","");
+			}
+        //}
+	};
+	addNeighbours();
 
     
 }
 
 function nodeSelected(ev)
 {
-	var targetId = ev.target.id != '' ? ev.target.id: $(ev.target).parent().attr('id');
-	targetId = targetId != '' ? targetId :  $(ev.target).parent().parent().attr('id');
-	var patt1=/hex([0-9]*)-([0-9]*)/;
-	var x = (targetId.match(patt1)[1]);
-	var y = (targetId.match(patt1)[2]);
-	var node = hexMap[y][x];
-	if(wallPlayerGoal == 'wall')
+
+		var targetId = ev.target.id != '' ? ev.target.id: $(ev.target).parent().attr('id');
+		targetId = targetId != '' ? targetId :  $(ev.target).parent().parent().attr('id');
+		var patt1=/hex([0-9]*)-([0-9]*)/;
+		var x = (targetId.match(patt1)[1]);
+		var y = (targetId.match(patt1)[2]);
+		addWallPlayerGoal(wallPlayerGoal,x,y);
+
+
+}
+
+function addWallPlayerGoal(type,x,y)
+{
+	if(isBuildingMap == false && isAnimating == false)
 	{
-		if(node.isWall == false)
+		$("#animateButton").attr("disabled","disabled");
+	
+		var node = hexMap[y][x];
+		if(type == 'wall' && playerNodes.indexOf(node) == -1 && goalNodes.indexOf(node))
 		{
-			node.isWall = true;
-			$("#"+ targetId).find('polygon').attr("fill","black");
+			if(node.isWall == false)
+			{
+				node.isWall = true;
+				$("#"+ node.getId()).find('polygon').attr("fill","black");
+			}
+			else
+			{
+				node.isWall = false;
+				$("#"+ node.getId()).find('polygon').attr("fill","white");
+			}
 		}
-		else
+		else if(type == 'player')
 		{
-			node.isWall = false;
-			$("#"+ targetId).find('polygon').attr("fill","white");
+			var index = playerNodes.indexOf(node);
+			if(index== -1)
+			{
+				playerNodes.push(node);
+				$("#"+ node.getId()).find('polygon').attr("fill",getPlayerColor(node));
+		
+			}
+			else
+			{
+				playerNodes.splice(index,1);
+				$("#"+ node.getId()).find('polygon').attr("fill","white");	
+			}
+		}
+		else if(type == 'goal')
+		{
+			var index = goalNodes.indexOf(node);
+			if(index== -1)
+			{
+				goalNodes.push(node);
+				$("#"+ node.getId()).find('polygon').attr("fill","#66FF66");
+			}
+			else
+			{
+				goalNodes.splice(index,1);
+				$("#"+ node.getId()).find('polygon').attr("fill","white");
+			}
+		
 		}
 	}
-	else if(wallPlayerGoal == 'player')
-	{
-		$("#"+ targetId).find('polygon').attr("fill","blue");
-		var index = playerNodes.indexOf(node);
-		if(index== -1)
-			playerNodes.push(node);
-		else
-			playerNodes.splice(index,1);
-	}
-	else if(wallPlayerGoal == 'goal')
-	{
-		$("#"+ targetId).find('polygon').attr("fill","green");
-		var index = goalNodes.indexOf(node);
-		if(index== -1)
-			goalNodes.push(node);
-		else
-			goalNodes.splice(index,1);
-	}
+}
+
+function getPlayerColor(playerNode)
+{
+	//say 10 unique colors
+	var blue = 156;
+	var green = playerNodes.indexOf(playerNode)*10;
+	if(green>100)
+		green = 100;
+	blue+=green;
+	var blueHex = blue.toString(16);
+	blueHex = (blueHex.length < 2 ? "0":"") + blueHex;
+	var greenHex = green.toString(16);
+	greenHex = (greenHex.length < 2 ? "0":"") + greenHex;
+	
+	return "#00" + greenHex + blueHex;
+}
+
+
+function getPlayerPathColor(playerNode)
+{
+	//say 10 unique colors
+	var blue = 156;
+	var green = playerNodes.indexOf(playerNode)*10;
+	if(green>100)
+		green = 100;
+	blue+=green;
+	green+=50;
+	var blueHex = blue.toString(16);
+	blueHex = (blueHex.length < 2 ? "0":"") + blueHex;
+	var greenHex = green.toString(16);
+	greenHex = (greenHex.length < 2 ? "0":"") + greenHex;
+	var redHex = greenHex;
+	
+	return "#" + redHex + greenHex + blueHex;
 }
 
 function changeType(ev)
@@ -222,13 +309,14 @@ function changeType(ev)
 	wallPlayerGoal = ev.target.value;
 }
 
-function start()
+function buildMapAction()
 {
+	isBuildingMap = true;
 	buildDirectionalMap();
 	console.log("build")
 }
 
-function start2()
+function startMovingAction()
 {
 	startAnimation();
 }
@@ -240,12 +328,32 @@ function startAnimation()
 	{
 		var current = playerNodes[i];
 		var next = current.getBestNeighbour();
-		current.htmlElement.find('polygon').attr("fill","white");
+		current.htmlElement.find('polygon').attr("fill",getPlayerPathColor(current));
+		if(goalNodes.indexOf(next) > -1)
+		{
+				playerNodes.splice(playerNodes.indexOf(current),1);
+				break;
+
+		}
 		next.htmlElement.find('polygon').attr("fill","blue");
 		playerNodes[i]= next;
 	}
+	if(playerNodes.length>0)
+    	window.setTimeout("startAnimation()", 100);
+}
+
+function addTestMap()
+{
+	addWallPlayerGoal("goal",Math.floor(mapWidthCount/2), Math.floor(mapHeigtCount/2));
+	for(var i = 0; i < mapWidthCount*.8;i++)
+	{
+		addWallPlayerGoal("wall",i, Math.floor(mapHeigtCount*.75));
+		addWallPlayerGoal("wall",mapWidthCount-1-i, Math.floor(mapHeigtCount*.25));
+	}
+	addWallPlayerGoal("player",0,0);
+	addWallPlayerGoal("player",mapWidthCount-1,mapHeigtCount-1);
 	
-    //window.setTimeout("startAnimation()", 50);
+	
 }
 
 </script>
@@ -260,17 +368,31 @@ function startAnimation()
 </style>
 </head>
 <body>
-<div >
-	<div id="mainDiv" style="width:260px;height:320px;position:relative;">
+<div style="min-width:650px">
+	<div id="mainDiv" style="width:390px;height:410px;float:left;position:relative;">
 	</div>
-	<div  style="position:absolute;right:0px;left:auto;border:inset grey 4px">
-		<span>  <input type="radio" checked="checked" name="nodeType" value="wall" onclick="changeType(event)"/>wall</span>
-		<span>  <input type="radio" name="nodeType" value="player" onclick="changeType(event)"/>player</span>				
-		<span>  <input type="radio" name="nodeType" value="goal" onclick="changeType(event)"/>goal</span>
-		<button onclick="start();"> Start</button>
-		<button onclick="start2();"> Start2</button>
-		
-		
+	<div  style="position:relative;float:left;border:inset grey 4px;height:410px;">
+		<div  style="width:200px;height:150px;">
+			<h1>Hexagon Map<br/> Path Finding</h1>
+		</div>
+		<div  style="height:180px;position:absolute;bottom:5px;left:5px;">
+			<div>Step 1: Build board, Click nodes to add 
+				<div style="padding-left:30px;">  
+				<input type="radio" checked="checked" name="nodeType" value="wall" onclick="changeType(event)"/>wall
+				<input type="radio" name="nodeType" value="player" onclick="changeType(event)"/>player			
+				<input type="radio" name="nodeType" value="goal" onclick="changeType(event)"/>goal
+				</div>
+				<button onclick="addTestMap();">Sample Board</button>
+			</div>
+			<div>Step 2: Build Directional Map<button onclick="buildMapAction();"> Build</button>
+			</div>
+			<div>Step 3: Move Players to goal
+			<button id="animateButton" onclick="startMovingAction();" disabled="disabled"> Start Animation</button>
+			</div>
+			<button onclick="location.reload();"> Reset</button>
+			</div>
+			</div>
+		</div>
 	</div>
 </div>
 
