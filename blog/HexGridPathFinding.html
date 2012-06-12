@@ -193,7 +193,14 @@ function buildDirectionalMap()
         {
 			var node = hexMap[i][j];
 			if(node!=null)
+			{
+				node.nodesUntilGoal = 9999;
+			    node.selectedNeighbour = null;
+				node.goalNode = null;
 				node.htmlElement.find('.arrowDiv').html("");
+				if(!(node.isWall == true || goalNodes.indexOf(node) > -1 || playerNodes.indexOf(node) > -1))
+					node.htmlElement.find('polygon').attr("fill","white");
+			}
 		}
 	}
     //add goal nodes
@@ -394,8 +401,26 @@ function startAnimation()
     	window.setTimeout("startAnimation()", 100);
 }
 
+function resetPlayersAndGoals()
+{
+	while(goalNodes.length > 0)
+	{
+		$("#"+ goalNodes[goalNodes.length-1].getId()).find('polygon').attr("fill","white");
+		goalNodes.pop();
+		
+	}
+	while(playerNodes.length > 0)
+	{
+		$("#"+ playerNodes[playerNodes.length-1].getId()).find('polygon').attr("fill","white");
+		playerNodes.pop();
+		
+	}
+}
+
+
 function addTestMap()
 {
+	resetPlayersAndGoals();
 	addWallPlayerGoal("goal",Math.floor(mapWidthCount/2), Math.floor(mapHeigtCount/2));
 	for(var i = 0; i < mapWidthCount*.8;i++)
 	{
@@ -403,9 +428,42 @@ function addTestMap()
 		addWallPlayerGoal("wall",mapWidthCount-1-i, Math.floor(mapHeigtCount*.25));
 	}
 	addWallPlayerGoal("player",0,0);
-	addWallPlayerGoal("player",mapWidthCount-1,mapHeigtCount-1);
+	addWallPlayerGoal("player",mapWidthCount-1,mapHeigtCount-1);	
+}
+
+function addTestMap2()
+{
+	resetPlayersAndGoals();
+	addWallPlayerGoal("player",mapWidthCount-7, 0);
+	addWallPlayerGoal("player",mapWidthCount-1, 7);
 	
-	
+	for(var i = 2; i < mapHeigtCount-1;i++)
+	{
+		addWallPlayerGoal("wall",i, i);
+		addWallPlayerGoal("wall",i, i-1);
+	}
+	addWallPlayerGoal("goal",0,mapHeigtCount-7);
+	addWallPlayerGoal("goal",7,mapHeigtCount-1);
+}
+
+function addTestMap3()
+{
+	resetPlayersAndGoals();
+	for(var i = 0; i < mapWidthCount;i++)
+	{
+		if(i%4==0)
+		  addWallPlayerGoal("player",i, 0);
+		
+		addWallPlayerGoal("goal",i, mapHeigtCount-1);
+		
+		if(i<8 || i > 12)
+		 addWallPlayerGoal("wall",i, Math.floor(mapHeigtCount/4));
+		if(i>2 && i < mapWidthCount-2)
+		 addWallPlayerGoal("wall",i, Math.floor(mapHeigtCount/4)*2);
+		if(i<4 || (i >6 && i < 10) || (i > 12))
+			addWallPlayerGoal("wall",i, Math.floor(mapHeigtCount/4)*3);
+		
+	}
 }
 
 </script>
@@ -434,7 +492,9 @@ function addTestMap()
 				<input type="radio" name="nodeType" value="player" onclick="changeType(event)"/>player			
 				<input type="radio" name="nodeType" value="goal" onclick="changeType(event)"/>goal
 				</div>
-				<button onclick="addTestMap();">Sample Board</button>
+				Sample<button onclick="addTestMap();"> Board 1</button>
+				<button onclick="addTestMap2();"> Board 2</button>
+				<button onclick="addTestMap3();"> Board 3</button>
 			</div>
 			<div>Step 2: Build Directional Map<button onclick="buildMapAction();"> Build</button>
 			</div>
