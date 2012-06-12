@@ -26,6 +26,8 @@ function HexMapNode(x, y)
     this.rightBottomNode = null;
     this.htmlElement = null;
     this.nodesUntilGoal = 9999;
+    this.selectedNeighbour = null;
+	this.goalNode = null;
 
     this.getId = function()
 	{
@@ -37,6 +39,18 @@ function HexMapNode(x, y)
 		var actualY = (this.y*nodeSize) + (nodeSize/2)*(this.x%2);
 		return [actualX, actualY];
 		
+	};
+	this.getDistanceFromGoal = function()
+	{
+		if(this.goalNode !=null)
+		{
+			var pos1 = this.getPos();
+			var pos2 = this.goalNode.getPos();
+			var result =  Math.sqrt(Math.pow(pos1[0]-pos2[0],2) + Math.pow(pos1[1]-pos2[1],2));
+			return result;
+		}
+		return 9999;
+
 	};
 	this.getHexMapNodeFromDirection = function(direction)
 	{
@@ -55,6 +69,23 @@ function HexMapNode(x, y)
 	    
 	    return null;
 	};
+	this.getArrowAngle = function()
+	{
+	    if(this.selectedNeighbour==this.topNode)
+	            return 0; 
+	     if(this.selectedNeighbour==this.bottomNode)
+	            return 180;  
+	     if(this.selectedNeighbour==this.leftTopNode)
+	            return -60;
+	      if(this.selectedNeighbour==this.rightTopNode)
+	            return 60;
+	      if(this.selectedNeighbour==this.leftBottomNode)
+	            return -120;
+	       if(this.selectedNeighbour==this.rightBottomNode)
+	            return 120;
+	    
+	    return 0;
+	};
 	this.getBestNeighbour = function()
 	{
 		var min = 9999;
@@ -69,9 +100,10 @@ function HexMapNode(x, y)
 					bestNode = nodeArray[i];
 					min = nodeArray[i].nodesUntilGoal;
 				}
-				else if( nodeArray[i].nodesUntilGoal == min)
+				else if( nodeArray[i].nodesUntilGoal == min && bestNode!=null && 
+					nodeArray[i].getDistanceFromGoal() < bestNode.getDistanceFromGoal())
 				{
-					
+					bestNode = nodeArray[i];
 				}
 			}
 		}
@@ -98,10 +130,12 @@ function buildMap()
             var newNode = new HexMapNode(j,i);
             hexMap[i].push(newNode);
 			var node = ' <div id="'+ newNode.getId() + '"class="hex" style="left:'+ newNode.getPos()[0] + ';top:'+ newNode.getPos()[1] +';" onclick="nodeSelected(event);"> \
-				<div class="nodesUntilGoalDiv" style="position:absolute;left:5px;top:5px;"></div>\
+				<div class="arrowDiv" style="position:absolute;left:5px;top:5px;"></div>\
 				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="25" width="25" viewBox="0 0 100 100"> \
-				<polygon points="4,50 25,4 75,4 96,50 75,96 25,96 4,50" fill="white" stroke="black" stroke-width="4"/></svg> \
+				<polygon points="4,50 25,4 75,4 96,50 75,96 25,96 4,50" fill="white" stroke="black" stroke-width="4"/>\
+				</svg> \
 				</div>';
+
 			$('#mainDiv').append(node);
 			newNode.htmlElement = $('#'+newNode.getId() );
             if(i!=0)
@@ -150,20 +184,32 @@ function buildDirectionalMap()
 	var openSet = [];
 	var closedSet = {};
 	var closedCount = 0;
+	//reset Arrows
+	$("#animateButton").attr("disabled","disabled");
+	
+	for(var i = 0; i <mapHeigtCount; i++)
+    {
+        for(var j=0; j< mapWidthCount; j++)
+        {
+			var node = hexMap[i][j];
+			if(node!=null)
+				node.htmlElement.find('.arrowDiv').html("");
+		}
+	}
     //add goal nodes
     for(var i=0; i< goalNodes.length; i++)
     {
 		var node = goalNodes[i];
 		node.nodesUntilGoal = 0;
-		node.htmlElement.find('.nodesUntilGoalDiv').html("");
+		node.htmlElement.find('.arrowDiv').html("");
+		node.goalNode = node;
 		openSet.push(node);
     }
 var i = 0;
 	var addNeighbours = function()
 	{
 
-        //for(var i = 0; i < openSet.length; i++) 
-		//{
+
 			var node = openSet[i];
 			if(node!=null)
 			{
@@ -177,9 +223,15 @@ var i = 0;
 	                if(neighbour!=null  && neighbour.isWall == false && closedSet[neighbour.getId()]==null && openSet.indexOf(neighbour) == -1)
 	                {
 						neighbour.nodesUntilGoal = node.nodesUntilGoal + 1;
-						neighbour.htmlElement.find('.nodesUntilGoalDiv').html(neighbour.nodesUntilGoal);
+						neighbour.goalNode = node.goalNode;
+						neighbour.selectedNeighbour = neighbour.getBestNeighbour();
 						openSet.push(neighbour);
 						
+						neighbour.htmlElement.find('.arrowDiv').html('\
+						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="25" width="25" viewBox="0 0 100 100"> \
+							<g transform="rotate('+neighbour.getArrowAngle() + ',27,27)" > \
+								<path d="M25,50 L25,4 M25,4 L35,15 M25,4 L15,15 M25,4 " fill="black" stroke="black" stroke-width="6"/> \
+							</g></svg>');
 	                }
 	                else if(neighbour!=null  && neighbour.isWall == true) 
 	                {
@@ -196,7 +248,6 @@ var i = 0;
 				isBuildingMap = false;
 				$("#animateButton").attr("disabled","");
 			}
-        //}
 	};
 	addNeighbours();
 
@@ -220,7 +271,8 @@ function addWallPlayerGoal(type,x,y)
 {
 	if(isBuildingMap == false && isAnimating == false)
 	{
-		$("#animateButton").attr("disabled","disabled");
+		if(type != 'player')
+	    	$("#animateButton").attr("disabled","disabled");
 	
 		var node = hexMap[y][x];
 		if(type == 'wall' && playerNodes.indexOf(node) == -1 && goalNodes.indexOf(node))
@@ -327,7 +379,7 @@ function startAnimation()
 	for(var i = 0; i < playerNodes.length; i++)
 	{
 		var current = playerNodes[i];
-		var next = current.getBestNeighbour();
+		var next = current.selectedNeighbour;
 		current.htmlElement.find('polygon').attr("fill",getPlayerPathColor(current));
 		if(goalNodes.indexOf(next) > -1)
 		{
@@ -372,11 +424,11 @@ function addTestMap()
 	<div id="mainDiv" style="width:390px;height:410px;float:left;position:relative;">
 	</div>
 	<div  style="position:relative;float:left;border:inset grey 4px;height:410px;">
-		<div  style="width:200px;height:150px;">
-			<h1>Hexagon Map<br/> Path Finding</h1>
+		<div  style="width:230px;padding:5px">
+			<h1>Hexagon Grid<br/>Directional Map <br/> Path Finding</h1>
 		</div>
 		<div  style="height:180px;position:absolute;bottom:5px;left:5px;">
-			<div>Step 1: Build board, Click nodes to add 
+			<div>Step 1: Build board, click to add 
 				<div style="padding-left:30px;">  
 				<input type="radio" checked="checked" name="nodeType" value="wall" onclick="changeType(event)"/>wall
 				<input type="radio" name="nodeType" value="player" onclick="changeType(event)"/>player			
