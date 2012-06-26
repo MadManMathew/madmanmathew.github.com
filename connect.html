@@ -2,7 +2,7 @@
 <html>
 	<head>
 
-		<script type="text/javascript" src="js/jquery-1.7.2.min.js">
+		<script  src="js/jquery-1.7.2.min.js">
 </script>
 		<script type="text/javascript">
 var isRedTurn = true;
@@ -120,7 +120,7 @@ function allowDrop(ev)
 
 function drag(ev)
  {
-    ev.dataTransfer.setData("kind", ev.target.id);
+    ev.dataTransfer.setData('text/html', ev.target.id);
 }
 
 function toggleTurn()
@@ -451,15 +451,18 @@ function getRowHuristics(peiceType, i, j, gameBoard)
 
 function drop(ev)
  {
-    var data = ev.dataTransfer.getData("kind");
+    var data = ev.dataTransfer.getData('text/html');
     var targetCell = ev.target.id != '' ? ev.target.id: $(ev.target).parent().attr('id');
     var i = 0;
     var j = 0;
+    var j = 0;
     var peiceType = 0;
-    if (data == "blackpeice")
+    if (data.indexOf("blackpeice") > -1)
     peiceType = 2;
-    else if (data == "redpeice")
+    else if (data.indexOf("redpeice") > -1)
     peiceType = 1;
+    else
+        alert("drag peice only");
 
     j = parseInt(targetCell.substring(targetCell.length - 1, targetCell.length));
     i = gameBoardCount[j];
@@ -508,7 +511,7 @@ function afterPlaced()
     }
     else
     {
-		if(peiceType == 1 && $('input:#autoAI').attr("checked") == "checked")
+		if(isRedTurn == false && $('input:#autoAI').attr("checked") == "checked")
 			window.setTimeout("useAI2()", 500);
     }
 }
@@ -676,7 +679,7 @@ $(window).resize(resize_template);
 					</td>
 					<td width="20%" >
 						<button onclick="javascript:useAI2();" style="visibility:hidden;" id="userAILink">Use AI</button>
-						<input id="autoAI" type="checkbox">Auto</button>
+						<input id="autoAI" type="checkbox"/>Auto
 					</td>
 				</tr>
 			</table>
