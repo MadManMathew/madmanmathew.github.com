@@ -1,549 +1,709 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
-<head>
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>	
-    <!--
-	<link href="css/template.css" media="screen" rel="stylesheet" type="text/css">
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+		<script type="text/javascript">
+</script>
+		<style type="text/css">
+		body {
+			margin: 0px;
+			padding: 0px;
+			background-image: url('assets/background.png');
+		}
+		#headerDiv {
+			background-image: url('assets/headerBackground.png');
+			background-repeat: repeat;
+			height: 88px;
+			width: 100%;
+			padding: 0px;
+			position: relative;
+		}
+		.stiches {
+			height: 2px;
+			width: 100%;
+			background-image: url('assets/stichesBackground.png');
+			background-repeat: repeat;
+		}
+		.headerBottomStiches {
+			position: absolute;
+			bottom: 6px;
+		}
+		.headerTopStiches {
+			position: absolute;
+			top: 6px;
+		}
+		#headerContents {
+			position: relative;
+			top: 30px;
+		}
+		#menuDiv {
+			display: block;
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			margin: 0px;
+			padding: 0px;
+		}
+		li.menuListItem {
+			display: block;
+			float: left;
+			padding: 10px 14px 10px 14px;
+		}
+		a.menuItem {
+			font-family: Arial;
+			text-decoration: none;
+			cursor: default;
+		}
+		a.menuItem:hover {
+			color: grey;
+		}
+		li.currentLink {
+			background-image: url('assets/linkSelected.png');
+			background-repeat: no-repeat;
+		}
+		img.menuItem {
+			margin: auto;
+		}
+		#navigationDiv {
+			background-color: white;
+			height: 350px;
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+		}
+		.greySpace {
+			background-color: #dddddd;
+			height: 2px;
+			width: 100%;
+		}
+		.blueSpace {
+			background-color: #535862;
+			height: 1px;
+			width: 100%;
+		}
+		#recentWorkDiv {
+			height: 315px;
+			position: relative;
+			margin-top: 41px;
+		}
+		#recentWorkHeader {
+		}
+		#recentWorkSpacer {
+			padding-top: 16px;
+			padding-bottom: 18px;
+		}
 
-	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>        
-	<script type="text/javascript" src="js/template.js"></script-->      
-    <script>
-        
-    </script>
-    
-    <style>
-        body
-        {
-            margin:0px;
-            padding:0px;
-            background-image:url('assets/background.png');
-
-        }
-        #headerDiv
-        {
-            background-image:url('assets/headerBackground.png');
-            background-repeat:repeat;
-            height:88px;
-            width:100%;
-            padding:0px;
-            position:relative;
-        }
-        .stiches
-        {
-            height:2px;
-            width:100%;
-            background-image:url('assets/stichesBackground.png');
-            background-repeat:repeat;
-        }
-        .headerBottomStiches
-        {
-            position:absolute;
-            bottom:6px;
-        }
-        .headerTopStiches
-        {
-            position:absolute;
-            top:6px;
-        }
-        #headerContents
-        {
-            position:relative;
-            top:30px;
-        }
-        #menuDiv
-        {
-            display:block;
-            position:absolute;
-            top:0px;
-            right:0px;
-            margin:0px;
-            padding:0px;
-            
-        }
-        li.menuListItem
-        {
-            display:block;
-            float:left;
-            padding:10px 14px 10px 14px;
-        }
-        a.menuItem
-        {
+		h1 {
+			font-size: 2em;
+			padding: 0px;
+			margin: 0px;
+		}
+		h2 {
+			font-size: 1.125em;
+			padding: 0px;
+			margin: 0px;
+		}
+		h3 {
+			font-size: 1em;
+			padding: 0px;
+			margin: 0px;
+		}
+		h4 {
+			font-size: 0.875em;
+			padding: 0px;
+			margin: 0px;
+		}
+		.greyFont {
+			color: #434853;
+		}
+		.greenFont {
+			color: #779e00;
+		}
+		.droidFont {
+			font-family: Droid sans;
+			text-shadow: 1px 1px 1px #FFFFFF;
+		}
+		.spacer {
+			height: 2px;
+			width: 100%;
+			background-image: url('assets/spacer.png');
+			background-repeat: repeat;
+		}
+		.footerSpacer {
+			height: 2px;
+			width: 100%;
+			margin-top: 10px;
+			margin-bottom: 16px;
+			background-image: url('assets/footerSpacer.png');
+			background-repeat: no-repeat;
+		}
+		.contentDiv {
+			width: 966px;
+			margin: auto;
+		}
+		#electricSpacer {
+			height: 22px;
+			margin: auto;
+			position: relative;
+		}
+		.electricHalfSpacer {
+			width: 460px
+		}
+		#electricLeftSpacer {
+			left: 0px;
+			top: 10px;
+			position: absolute;
+		}
+		#electricRightSpacer {
+			right: 0px;
+			top: 10px;
+			position: absolute;
+		}
+		#recentWorkColumnsDiv {
+			width: 100%;
+		}
+		.columnThird {
+			float: left;
+			width: 300px;
+		}
+		.columnSpacer {
+			float: left;
+			width: 33px;
+			height: 100px;
+		}
+		.footerColumnQuarter {
+			float: left;
+			width: 225px;
+		}
+		.footerColumnSpacer {
+			float: left;
+			width: 22px;
+			height: 1px;
+		}
+		#detailsColumnsDiv {
+			height: 144px;
+			float: clear;
+			margin-top: 22px;
+			margin-bottom: 22px;
+		}
+		p {
+			font-family: Arial;
+			font-size: 0.75em;
+			font-color: #57595d;
+			line-height: 1.5em;
+		}
+		#electricIconDiv {
+			margin: auto;
+			width: 11px;
+		}
+		#socialMediaDiv {
+			height: 412px;
+			float: clear;
+			margin-top: 33px;
+		}
+		#footerDiv {
+			height: 218px;
+			background-image: url('assets/footerBackground.png');
+			background-repeat: repeat;
+		}
+		#footerCopyrightDiv {
+			background-image: url('assets/headerBackground.png');
+			background-repeat: repeat;
+			height: 60px;
+			position: relative;
+		}
+		#footerHeaderDiv {
+			padding-top: 28px;
+			height: 44px
+		}
+		.whiteFont {
+			color: white;
+			text-shadow: 1px 1px 1px #16181e;
+		}
+		img.recentWork {
+			border: 1px solid grey;
+			padding: 6px;
+			background-color: white;
+			width: 100%;
+			height: 160px;
+		}
+		.recentWorkColumn {
+			text-align: center;
+		}
+		h4.recentWorkTitle {
+			margin-top: 18px;
+			margin-bottom: 2px;
+		}
+		p.recentWorkDetails {
+			margin: 0px;
+		}
+		.navDiv {
+			height: 350px;
+		}
+		.navContentImageDiv {
+			position: absolute;
+			top: 10px;
+			right: 0px;
+		}
+		p.navP {
+			width: 300px
+		}
+		.navTitle {
+			margin-top: 60px;
+		}
+		.testNavDiv {
+			top: 0px;
+			position: absolute;
+			width: 100% ;
+		}
+		p.footerP {
+			margin: 0px;
+			color: #f2f5f7;
+			text-shadow: 1px 1px 1px #16181e;
+		}
+		img.photoStreamImage {
+			width: 60px;
+			height: 60px;
+			border: 2px solid #606570;
+			float: left;
+		}
+		.photoStreamSpacer {
+			float: left;
+			width: 16px;
+			height: 1px;
+		}
+		a.photoStreamAnchor {
+			background-image: url('assets/socialMediaButtonBackground.png');
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+		a.photoStreamAnchor:hover {
+			background-image: url('assets/socialMediaButtonSelectedBackground.png');
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+		img.socialMediaImage {
+			margin: auto;
+			padding-top: 6px;
+			display: block;
+		}
+		li.photoStreamListItem {
+			float: left;
+			display: block;
+			width: 29px;
+			height: 28px;
+		}
+		ul.socialMediaList {
+			padding: 0px;
+			padding-top: 12px;
+			maring: 0px;
+		}
+		h4.contactDetalsSubHeader {
+			font-weight: normal;
+			float: left;
+			padding-left: 10px;
+		}
+		p.contactDetailsAddress {
+			float: left;
+			margin: 0px;
+			margin-left: 5px;
+			width: 140px;
+		}
+		.contactDetailIconDiv {
+			float: left;
+		}
+		.contactDetailRow {
+			width: auto;
+			height: 20px;
+			margin-bottom: 15px;
+		}
+		a.contactEmail {
+			font-size: 0.75em;
+			font-family: Arial;
+			float: left;
+			margin-left: 5px;
+			text-decoration: none;
+		}
+		.copyright {
+			float: left;
+		}
+		.designedBy {
+			float: right;
+		}
+		.copyrightDiv {
+			position: relative;
+			padding-top: 25px;
+		}
+        .copyrightText {
+            color:#bbbdc0;
             font-family:Arial;
-            text-decoration:none;
-            cursor:default;
+            text-shadow: 1px 1px 1px #16181e;
+            font-size: 0.75em;
 
         }
-        a.menuItem:hover
-        {
-            color:grey;
-
-        }
-        li.currentLink
-        {
-            background-image:url('assets/linkSelected.png');
-            background-size:100% contain;
-            background-repeat:no-repeat;
-
-        }
-        img.menuItem
-        {
-            margin:auto;
-        }
-        #navigationDiv
-        {
-            background-color:white;
-            height:350px;
-            width:100%;
-            position:relative;
-            overflow:hidden;
-        }
-        .greySpace
-        {
-            background-color:#dddddd;
-            height:2px;
-            width:100%;
-
-        }
-        .blueSpace
-        {
-            background-color:#535862;
-            height:1px;
-            width:100%;
-
-        }
-        #recentWorkDiv
-        {
-            height:315px;
-            position:relative;
-            margin-top:41px;
-        }
-        #recentWorkHeader
-        {
-
-        }
-        #recentWorkSpacer
-        {
-            padding-top:16px;
-            padding-bottom:18px;
-        }
-        
-        h1
-        {
-            font-size:2em;
-            padding:0px;
-            margin:0px;
-        }
-        h2
-        {
-            font-size:1.125em;
-            padding:0px;
-            margin:0px;
-        }
-        h3
-        {
-            font-size:1em;
-            padding:0px;
-            margin:0px;
-        }
-        h4
-        {
-            font-size:0.875em;
-            padding:0px;
-            margin:0px;
-        }
-        .greyFont
-        {
-            color:#434853;
-        }
-        .greenFont
-        {
-            color:#779e00;   
-        }
-        .droidFont
-        {
-            font-family: Droid sans;
-            text-shadow: 1px 1px 1px #FFFFFF;
-        }
-        .spacer
-        {
-            height:2px;
-            width:100%;
-            background-image:url('assets/spacer.png');
-            background-repeat:repeat;
+        strong.copyrightStrong{
+            color:#f2f5f7;
         }
 
-        .contentDiv
-        {
-            width:966px;
-            margin: auto;
-        }
-        #electricSpacer
-        {
-            height:22px;   
-            margin:auto;
-                        position:relative;
+		</style>
+		<title></title>
+	</head>
+	<body>
+		<div id="headerDiv">
+			<div class="headerTopStiches stiches"></div>
+			<div id="headerContents" class="contentDiv">
+				<img src="assets/snapshotIconLarge.png"> <img src="assets/dotHeaderText.png">
+				<ul id="menuDiv">
+					<li class="menuListItem currentLink">
+						<h4>
+							<a class="menuItem whiteFont">Homepage</a>
+						</h4>
+					</li>
+					<li class="menuListItem">
+						<h4>
+							<a class="menuItem whiteFont">About Us</a>
+						</h4>
+					</li>
+					<li class="menuListItem">
+						<h4>
+							<a class="menuItem whiteFont">Blog</a>
+						</h4>
+					</li>
+					<li class="menuListItem">
+						<h4>
+							<a class="menuItem whiteFont">Portfolio</a>
+						</h4>
+					</li>
+					<li class="menuListItem">
+						<h4>
+							<a class="menuItem whiteFont">Contact</a>
+						</h4>
+					</li>
+				</ul>
+			</div>
+			<div class="headerBottomStiches stiches"></div>
+		</div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript">
+</script><script type="text/javascript">
+	var index = 0;
+			function clickLeft(ev)
+			{
+				index++;
+			   $("#testNav").animate({left:(index)*966+'px'},500,'linear',onLeftComlete);
+			   $("#couldBG").animate({left:(index-1)*200 +'px'},500);
+			}
+			function clickRight(ev)
+			{
+				index--;
+			   $("#testNav").animate({left:(index)*966+'px'},500,'linear',onRightComplete);
+			   $("#couldBG").animate({left:(index-1)*200 +'px'},500);
+			}
+			function onLeftComlete()
+			{
+					//index++;
+			}
+			 function onRightComplete()
+			{
+					//index--;
+			}
+			
+			function on_doc_ready()
+			{
+				$("#navigationDiv").append('\
+				<div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
+					<div id="couldBG" style="position:absolute;left:-200px;width:150%;height:100%;background-image:url(\'assets/cloudsBackGround.jpeg\')"><\/div> \
+				<\/div> \
+				<div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
+					<div style="margin:auto;width:1186px;"> \
+						<div style="float:left;"><button onclick="clickLeft(event)" style="margin-top:144px;height:48px;width:47px;border:none;background-color:transparent;background-image:url(\'assets/navigationButton.png\')"><\/button> <\/div>\
+						<div style="float:right;"><button onclick="clickRight(event)" style="margin-top:144px;height:48px;width:47px;border:none;background-color:transparent;background-image:url(\'assets/navigationButton.png\')"><\/button> <\/div>\
+					<\/div>\
+					<div  class="contentDiv navDiv" style="overflow:hidden;">\
+						<div id="testNav"  style="left:0px;position:relative;"><\/div>\
+					<\/div>\
+				<\/div>');
+				
+				
+			$(".specialNavDiv").each(function(i,e)
+				{
+					$(e).appendTo("#testNav");
+					$(e).addClass("testNavDiv");
+					$(e).css("left", i * 966 + "px");
+				});
+			}
+			$(document).ready(on_doc_ready);
 
-        }
-        .electricHalfSpacer
-        {
-            width:460px
-        }
-        #electricLeftSpacer
-        {
-            left:0px;
-            top:10px;
-            position:absolute;
-        }
-        #electricRightSpacer
-        {
-            right:0px; 
-            top:10px;
-            position:absolute;
-        }
-        #recentWorkColumnsDiv
-        {
-            width:100%;
-        }
-        .columnThird
-        {
-            float:left;
-            width:300px;
-        }
-        .columnSpacer
-        {
-            float:left;
-            width:33px;
-            height:100px;
-
-        }
-        .footerColumnQuarter
-        {
-            float:left;
-            width:225px;
-        }
-        .footerColumnSpacer
-        {
-            float:left;
-            width:22px;
-            height:100px;
-
-        }
-        #detailsColumnsDiv
-        {
-            height:144px;   
-            float:clear;
-            margin-top:22px;
-            margin-bottom:22px;
-        }
-        p
-        {
-            font-family:Arial;
-            font-size:0.75em;
-            font-color: #57595d;
-            line-height:1.5em;
-        }
-        #electricIconDiv
-        {
-            margin:auto;
-            width:11px;
-        }
-         #socialMediaDiv
-        {
-            height:412px;   
-            float:clear;
-            margin-top:33px;
-        }
-        #footerDiv
-        {
-            height:218px;  
-            background-image:url('assets/footerBackground.png');
-            background-repeat:repeat;
-        }
-        #footerCopyrightDiv
-        {   
-            background-image:url('assets/headerBackground.png');
-            background-repeat:repeat;
-            height:60px;
-            position:relative;
-        }
-        #footerContentDiv
-        {
-            padding-top:28px;
-        }
-        .whiteFont
-        {
-         
-            color:white;
-            text-shadow: 1px 1px 1px #16181e;   
-        }
-        img.recentWork
-        {
-            border:1px solid grey;
-            padding:6px;
-            background-color:white;
-            width:100%;
-            height:160px;
-        }
-        .recentWorkColumn
-        {
-            text-align:center;            
-        }
-        h4.recentWorkTitle
-        {
-            margin-top:18px;
-            margin-bottom:2px;
-        }
-        p.recentWorkDetails
-        {
-            margin:0px;
-        }
-        .navDiv
-        {
-         height:350px;   
-        }
-        
-        .navContentImageDiv
-        {
-            position:absolute;
-            top:10px;
-            right:0px;
-        }
-        .navP
-        {
-            width:300px
-        }
-        .navTitle
-        {
-            margin-top:60px;
-        }
-        .testNavDiv
-        {
-            top:0px;
-            position:absolute;
-            width:100%  ;
-        }
-                        
-    </style>
-</head>
-    <body>
-        <div id="headerDiv" >
-            <div class="headerTopStiches stiches"></div>
-            <div id="headerContents" class="contentDiv">
-                <img src="assets/snapshotIconLarge.png"/>
-                <img src="assets/dotHeaderText.png"/>
-                <ul id="menuDiv">
-                    <li class="menuListItem currentLink"><h4><a class="menuItem whiteFont">Homepage</a></h4></li>
-                    <li class="menuListItem"><h4><a class="menuItem whiteFont">About Us</a></h4></li>
-                    <li class="menuListItem"><h4><a class="menuItem whiteFont">Blog</a></h4></li>
-                    <li class="menuListItem"><h4><a class="menuItem whiteFont">Portfolio</a></h4></li>
-                    <li class="menuListItem"><h4><a class="menuItem whiteFont">Contact</a></h4></li>
-                </ul>
-            </div>
-            <div class="headerBottomStiches stiches"></div>
-        </div>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
-        <script>
-            var index = 0;
-            function clickLeft(ev)
-            {
-                index++;
-               $("#testNav").animate({left:(index)*966+'px'},500,'linear',onLeftComlete);
-               $("#couldBG").animate({left:(index-1)*200 +'px'},500);
-            }
-            function clickRight(ev)
-            {
-                index--;
-               $("#testNav").animate({left:(index)*966+'px'},500,'linear',onRightComplete);
-               $("#couldBG").animate({left:(index-1)*200 +'px'},500);
-            }
-            function onLeftComlete()
-            {
-                    //index++;
-            }
-             function onRightComplete()
-            {
-                    //index--;
-            }
+		</script>
+		<div id="navigationDiv">
+			<div class="specialNavDiv">
+				<div class="navTitle">
+					<h1 class="droidFont greyFont">
+						We Design
+					</h1>
+					<h1 class="droidFont greyFont">
+						Great Illustrations
+					</h1>
+					<p class="navP">
+						Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
+					</p>
+				</div>
+				<div class="navContentImageDiv">
+					<img src="assets/island.png">
+				</div>
+			</div>
+			<div class="specialNavDiv">
+				<div class="navTitle">
+					<h1 class="droidFont greyFont">
+						We Create
+					</h1>
+					<h1 class="droidFont greyFont">
+						Awesome Code
+					</h1>
+					<p class="navP">
+						Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
+					</p>
+				</div>
+				<div class="navContentImageDiv">
+					<img src="assets/umlDiagram.png">
+				</div>
+			</div>
+			<div class="specialNavDiv">
+				<div class="navTitle">
+					<h1 class="droidFont greyFont">
+						We Produce
+					</h1>
+					<h1 class="droidFont greyFont">
+						Terrific Products
+					</h1>
+					<p class="navP">
+						Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
+					</p>
+				</div>
+				<div class="navContentImageDiv">
+					<img src="assets/application.png">
+				</div>
+			</div>
+		</div>
+		<div class="greySpace"></div>
+		<div id="recentWorkDiv" class="contentDiv">
+			<div id="recentWorkHeader">
+				<h2 class="droidFont greyFont">
+					Recent Work
+				</h2>
+			</div>
+			<div id="recentWorkSpacer">
+				<div class="spacer"></div>
+			</div>
+			<div id="recentWorkColumnsDiv">
+				<div class="recentWorkColumn columnThird">
+					<img class="recentWork" src="assets/recentWork1.png">
+					<h4 class="recentWorkTitle droidFont greyFont">
+						Graphic River
+					</h4>
+					<p class="recentWorkDetails">
+						Print Design
+					</p>
+				</div>
+				<div class="columnSpacer"></div>
+				<div class="recentWorkColumn columnThird">
+					<img class="recentWork" src="assets/recentWork2.png" >
+					<h4 class="recentWorkTitle droidFont greenFont">
+						Dietary Couseling
+					</h4>
+					<p class="recentWorkDetails">
+						Website / Interface Design
+					</p>
+				</div>
+				<div class="columnSpacer"></div>
+				<div class="recentWorkColumn columnThird">
+					<img class="recentWork" src="assets/recentWork3.png">
+					<h4 class="recentWorkTitle droidFont greyFont">
+						Rockable Press
+					</h4>
+					<p class="recentWorkDetails">
+						Branding
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="electricSpacer" class="contentDiv">
+			<div>
+				<div id="electricLeftSpacer" class="spacer electricHalfSpacer"></div>
+				<div id="electricRightSpacer" class="spacer electricHalfSpacer"></div>
+			</div>
+			<div id="electricIconDiv">
+				<img src="assets/electricIcon.png">
+			</div>
+		</div>
+		<div id="detailsColumnsDiv" class="contentDiv">
+			<div class="columnThird">
+				<h2 class="droidFont greyFont">
+					We Design Great Websites
+				</h2>
+				<p>
+					Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
+				</p>
+			</div>
+			<div class="columnSpacer"></div>
+			<div class="columnThird">
+				<h2 class="droidFont greyFont">
+					About Team
+				</h2>
+				<p>
+					Fusce ac dolor in erat elementum auctor ante. Suspendisse nibh leo, hendrerit quis sed dictum non, dictum ut odio. Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
+				</p>
+			</div>
+			<div class="columnSpacer"></div>
+			<div class="columnThird">
+				<h2 class="droidFont greenFont">
+					Featured Works
+				</h2>
+				<p>
+					If you want to see more our projects, click the button below for full showcase of work stuff.
+				</p>
+			</div>
+		</div>
+		<div class="spacer contentDiv"></div>
+		<div id="socialMediaDiv" class="contentDiv">
+			<div class="columnThird">
+				<h2 class="droidFont greenFont">
+					From the Blog
+				</h2>
+				<p>
+					Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices.
+				</p>
+			</div>
+			<div class="columnSpacer"></div>
+			<div class="columnThird">
+				<h2 class="droidFont greyFont">
+					Latest Tweet
+				</h2>
+				<p>
+					Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
+				</p>
+			</div>
+			<div class="columnSpacer"></div>
+			<div class="columnThird">
+				<h2 class="droidFont greyFont">
+					Testimonials
+				</h2>
+				<p>
+					If you want to see more our projects, click the button below for full showcase of work stuff.
+				</p>
+			</div>
+		</div>
+		<div id="footerDiv">
+			<div id="footerHeaderDiv" class="contentDiv">
+				<div class="footerColumnQuarter">
+					<img src="assets/snapshotIconSmall.png">
+				</div>
+				<div class="footerColumnSpacer"></div>
+				<div class="footerColumnQuarter">
+					<h3 class="droidFont whiteFont">
+						Contact Details
+					</h3>
+					<div class="footerSpacer"></div>
+				</div>
+				<div class="footerColumnSpacer"></div>
+				<div class="footerColumnQuarter">
+					<h3 class="droidFont whiteFont">
+						Photo Stream
+					</h3>
+					<div class="footerSpacer"></div>
+				</div>
+				<div class="footerColumnSpacer"></div>
+				<div class="footerColumnQuarter">
+					<h3 class="droidFont whiteFont">
+						Newsletter
+					</h3>
+					<div class="footerSpacer"></div>
+				</div>
+			</div>
+			<div id="footerContentDiv" class="contentDiv">
+				<div class="footerColumnQuarter">
+					<p class="footerP droidFont">
+						Nunce ullamacorper commodore seemas placerater. Seeda arcuae est, malesuada ut vulputate in, tincidunt nec orci.
+					</p>
+					<ul class="socialMediaList">
+						<li class="photoStreamListItem">
+							<a class="photoStreamAnchor"><img class="socialMediaImage" src="assets/facebookIconSmall.png"></a>
+						</li>
+						<li class="photoStreamListItem">
+							<a class="photoStreamAnchor"><img class="socialMediaImage" src="assets/twitterIconSmall.png"></a>
+						</li>
+						<li class="photoStreamListItem">
+							<a class="photoStreamAnchor"><img class="socialMediaImage" src="assets/vimeoIconSmall.png"></a>
+						</li>
+						<li class="photoStreamListItem">
+							<a class="photoStreamAnchor"><img class="socialMediaImage" src="assets/linkedinIconSmall.png"></a>
+						</li>
+						<li class="photoStreamListItem">
+							<a class="photoStreamAnchor"><img class="socialMediaImage" src="assets/facebookIconSmall.png"></a>
+						</li>
+					</ul>
+				</div>
+				<div class="footerColumnSpacer"></div>
+				<div class="footerColumnQuarter">
+					<div class="contactDetailRow">
+						<div class="contactDetailIconDiv">
+							<img src="assets/addressIconSmall.png">
+						</div>
+						<h4 class="droidFont whiteFont contactDetalsSubHeader">
+							Address:
+						</h4>
+						<p class="contactDetailsAddress whiteFont">
+							Aleje Jerezelimskie 30, Warsaw, Polland
+						</p>
+					</div>
+					<div class="contactDetailRow">
+						<div class="contactDetailIconDiv">
+							<img src="assets/phoneIconSmall.png">
+						</div>
+						<h4 class="droidFont whiteFont contactDetalsSubHeader">
+							Phone:
+						</h4>
+						<p class="contactDetailsAddress whiteFont">
+							+44 (0) 560-655-955
+						</p>
+					</div>
+					<div class="contactDetailRow">
+						<div class="contactDetailIconDiv">
+							<img src="assets/mailIconSmall.png">
+						</div>
+						<h4 class="droidFont whiteFont contactDetalsSubHeader">
+							eMail:
+						</h4><a class="greenFont contactEmail" href="mailto:contact@snapshot.com">contact@snapshot.com</a>
+					</div>
+				</div>
+				<div class="footerColumnSpacer"></div>
+				<div class="footerColumnQuarter">
+					<img class="photoStreamImage">
+					<div class="photoStreamSpacer"></div><img class="photoStreamImage">
+					<div class="photoStreamSpacer"></div><img class="photoStreamImage">
+				</div>
+				<div class="footerColumnSpacer"></div>
+				<div class="footerColumnQuarter">
+					<p class="footerP droidFont">
+						Let's keep in touch! Sign up for our newsletter to recieve offers and news.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="blueSpace"></div>
+		<div id="footerCopyrightDiv">
+			<div class="copyrightDiv contentDiv copyrightText">
+				<div class="copyright">
+					@ Copyright 2012 by <strong class="copyrightStrong">Snapshot Theme.</strong> All Rights Reserved.
+				</div>
+				<div class="designedBy">
+					Designed by <strong class="copyrightStrong">Vasterad</strong> for <strong class="copyrightStrong">ThemeForest</strong>.
+				</div>
+			</div>
             
-            function on_doc_ready()
-            {
-                $("#navigationDiv").append('\
-                <div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
-                    <div id="couldBG" style="position:absolute;left:-200px;width:150%;height:100%;background-image:url(\'assets/cloudsBackGround.jpeg\')"></div> \
-                </div> \
-                <div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
-                    <div style="margin:auto;width:1186px;"> \
-                        <div style="float:left;"><button onclick="clickLeft(event)" style="margin-top:144px;height:48px;width:47px;border:none;background-color:transparent;background-image:url(\'assets/navigationButton.png\')"></button> </div>\
-                        <div style="float:right;"><button onclick="clickRight(event)" style="margin-top:144px;height:48px;width:47px;border:none;background-color:transparent;background-image:url(\'assets/navigationButton.png\')"></button> </div>\
-                    </div>\
-                    <div  class="contentDiv navDiv" style="overflow:hidden;">\
-                        <div id="testNav"  style="left:0px;position:relative;"></div>\
-                    </div>\
-                </div>');
                 
-                
-            $(".specialNavDiv").each(function(i,e)
-                {
-                    $(e).appendTo("#testNav");
-                    $(e).addClass("testNavDiv");
-                    $(e).css("left", i * 966 + "px");
-                });
-            }
-            $(document).ready(on_doc_ready);
-
-        </script>
-        <div id="navigationDiv" >
-            <div class="specialNavDiv">
-                <div class="navTitle">
-                    <h1 class="droidFont greyFont">We Design</h1>
-                    <h1 class="droidFont greyFont">Great Illustrations</h1>
-                    <p class="navP">
-                        Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
-                    </p>
-                </div>
-                
-                    <div class="navContentImageDiv">
-                        <img src="assets/island.png"/>
-                    </div>
-            </div>
-            <div class="specialNavDiv"><!--style="left:-966px;top:0px;position:absolute;width:100%"-->
-                <div class="navTitle">
-                    <h1 class="droidFont greyFont">We Create</h1>
-                    <h1 class="droidFont greyFont">Awesome Code</h1>
-                    <p class="navP">
-                        Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
-                    </p>
-                </div>
-                
-                    <div class="navContentImageDiv">
-                        <img src="assets/umlDiagram.png"/>
-                    </div>
-            </div>
-            <div class="specialNavDiv">
-                <div class="navTitle">
-                    <h1 class="droidFont greyFont">We Produce</h1>
-                    <h1 class="droidFont greyFont">Terrific Products</h1>
-                    <p class="navP">
-                        Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.
-                    </p>
-                </div>
-                
-                    <div class="navContentImageDiv">
-                        <img src="assets/application.png"/>
-                    </div>
-            </div>
-        </div>
-        
-        <div class="greySpace"></div>
-            
-        <div id="recentWorkDiv" class="contentDiv">
-            <div id="recentWorkHeader">
-                <h2 class="droidFont greyFont">Recent Work</h2>
-            </div>
-            <div id="recentWorkSpacer"><div  class="spacer"></div></div>
-            <div id="recentWorkColumnsDiv">
-                <div class="recentWorkColumn columnThird" >
-                     <img class="recentWork" />
-                     <h4 class="recentWorkTitle droidFont greyFont">Graphic River</h4>
-                     <p class="recentWorkDetails">Print Design</p>
-                </div>
-                <div class="columnSpacer"></div>
-
-                <div class="recentWorkColumn columnThird" >
-                     <img class="recentWork" />
-                     <h4 class="recentWorkTitle droidFont greenFont">Dietary Couseling</h4>
-                     <p class="recentWorkDetails">Website / Interface Design</p>
-                </div>
-                <div class="columnSpacer"></div>
-
-                <div class="recentWorkColumn columnThird" >
-                     <img class="recentWork" />
-                     <h4 class="recentWorkTitle droidFont greyFont">Rockable Press</h4>
-                     <p class="recentWorkDetails">Branding</p>
-                </div>
-            </div>
-        </div>
-        
-        <div id="electricSpacer" class="contentDiv">
-            <div>
-                <div id="electricLeftSpacer"  class="spacer electricHalfSpacer"></div>
-                <div id="electricRightSpacer" class="spacer electricHalfSpacer"></div>
-            </div>
-            <div id="electricIconDiv"><img src="assets/electricIcon.png"/></div>
-        </div>
-        
-         <div id="detailsColumnsDiv" class="contentDiv">
-                <div class="columnThird" >
-                    <h2 class="droidFont greyFont">We Design Great Websites</h2>
-                    <p>Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices. Nullam quis odio anele massa tempus tincidunt dolor quisa.</p>
-                </div>
-                <div class="columnSpacer"></div>
-
-                <div class="columnThird" >
-                    <h2 class="droidFont greyFont">About Team</h2>
-                    <p>Fusce ac dolor in erat elementum auctor ante. Suspendisse nibh leo, hendrerit quis sed dictum non, dictum ut odio. Donec pulvinar, lectus quis tempus tempus. hendrerit quis.</p>
-                </div>
-                <div class="columnSpacer"></div>
-
-                <div class="columnThird" >
-                    <h2 class="droidFont greenFont">Featured Works</h2>
-                    <p>If you want to see more our projects, click the button below for full showcase of work stuff.</p>
-                </div>
-        </div>
-        
-        <div  class="spacer contentDiv"></div>
-        
-        <div id="socialMediaDiv" class="contentDiv">
-                <div class="columnThird" >
-                    <h2 class="droidFont greenFont">From the Blog</h2>
-                    <p>Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices.</p>
-                </div>
-                <div class="columnSpacer"></div>
-
-                <div class="columnThird" >
-                    <h2 class="droidFont greyFont">Latest Tweet</h2>
-                    <p>Donec pulvinar, lectus quis tempus tempus. hendrerit quis.</p>
-                </div>
-                <div class="columnSpacer"></div>
-
-                <div class="columnThird" >
-                    <h2 class="droidFont greyFont">Testimonials</h2>
-                    <p>If you want to see more our projects, click the button below for full showcase of work stuff.</p>
-                </div>
-        </div>
-        
-        <div id="footerDiv">
-            <div id="footerContentDiv" class="contentDiv">
-                <div class="footerColumnQuarter" >
-                    <h2 class="droidFont greenFont">From the Blog</h2>
-                    <p>Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices.</p>
-                </div>
-                <div class="footerColumnSpacer"></div>
-
-                <div class="footerColumnQuarter" >
-                    <h3 class="droidFont whiteFont">Contact Details</h3>
-                    <p>Donec pulvinar, lectus quis tempus tempus. hendrerit quis.</p>
-                </div>
-                <div class="footerColumnSpacer"></div>
-
-                <div class="footerColumnQuarter" >
-                    <h3 class="droidFont whiteFont">Photo Stream</h3>
-                    <p>If you want to see more our projects, click the button below for full showcase of work stuff.</p>
-                </div>
-                <div class="footerColumnSpacer"></div>
-
-                <div class="footerColumnQuarter" >
-                    <h3 class="droidFont whiteFont">Newsletter</h3>
-                    <p>If you want to see more our projects, click the button below for full showcase of work stuff.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="blueSpace"></div>
-        
-        <div id="footerCopyRightDiv">
-            <div class="headerTopStiches stiches"></div>
-            <div class="headerBottomStiches stiches"></div>
-        </div>
-    </body>
+			 <div class="headerTopStiches stiches"></div>
+			 <div class="headerBottomStiches stiches"></div>
+		</div>
+	</body>
 </html>
