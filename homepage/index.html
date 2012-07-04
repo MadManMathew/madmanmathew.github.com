@@ -346,7 +346,62 @@
         strong.copyrightStrong{
             color:#f2f5f7;
         }
-
+        .quoteBuble{
+            border:1px solid #cfd2d7;
+                border-bottom: 0px none;
+                background-color:white;
+                padding:10px;
+                margin-top:12px;
+            }
+        p.quoteText{
+                font-style:italic;
+                margin:auto;
+                margin-top:0px;
+                margin-bttom:0px;
+            }
+        .quoteAuthor{
+                position:absolute;
+                right:0px;
+                bottom:2px;
+            }
+        .socialMediaFont{       
+                font-family:Arial;
+                font-size:.75em;
+            }
+        .quoteAuthorDiv{
+                position:relative;
+            }
+        .socialMediaContentDiv{
+                margin-top:12px;
+                height:auto;
+            }
+            .socialMediaIconDiv{
+                float:left;
+                height:100%;
+            }
+            img.fromTheBlogImage{
+                border: 1px solid gray;
+                padding:2px;
+                width:60px;
+                height:60px;
+            }
+            p.socialMediaP{   
+                margin:0px;
+                margin-left:6px;
+                margin-bottom:8px;   
+            }
+            p.fromTheBlogP{
+                float:left;
+                width:220px;
+            }
+            
+            p.latestTweetP{
+                float:right;
+                width:270px;
+            }
+            .socialMediaSpacer{
+                float:left;
+            }
 		</style>
 		<title></title>
 	</head>
@@ -570,27 +625,47 @@
 				<h2 class="droidFont greenFont">
 					From the Blog
 				</h2>
-				<p>
-					Fusce pharetra dolor quisa ipsume mosllis imperdiet orci ultrices.
-				</p>
+				<div class="socialMediaContentDiv">
+                    <div class="socialMediaIconDiv" >
+                        <img class="fromTheBlogImage" src="assets/quoteIcon.png"/>
+                    </div>
+				    <p class="socialMediaFont fromTheBlogP socialMediaP">
+					Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
+				    </p>
+                    <p class="socialMediaFont fromTheBlogP socialMediaP" >16 February 2012, <span class="greenFont">6 Comments</span></p>
+                    <div class="spacer socialMediaSpacer" ></div>
+                </div>
 			</div>
 			<div class="columnSpacer"></div>
 			<div class="columnThird">
 				<h2 class="droidFont greyFont">
 					Latest Tweet
 				</h2>
-				<p>
+                <div class="socialMediaContentDiv">
+                    <div class="socialMediaIconDiv">
+                        <img src="assets/quoteIcon.png"/>
+                    </div>
+				    <p class="socialMediaFont latestTweetP socialMediaP" >
 					Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
-				</p>
+				    </p>
+                    <p class="socialMediaFont latestTweetP socialMediaP" >6 days ago</p>
+                    <div class="spacer socialMediaSpacer" ></div>
+                </div>
 			</div>
 			<div class="columnSpacer"></div>
 			<div class="columnThird">
 				<h2 class="droidFont greyFont">
 					Testimonials
 				</h2>
-				<p>
-					If you want to see more our projects, click the button below for full showcase of work stuff.
-				</p>
+                <div class="quoteBuble">
+				    <p class="quoteText">
+					   If you want to see more our projects, click the button below for full showcase of work stuff.
+				    </p >
+                </div>
+                <div class="quoteAuthorDiv">
+                    <img src="assets/quoteBubbleBase.png"/>
+                    <div class="quoteAuthor socialMediaFont"><span class="greenFont">John Smith,</span> FlashDeveloper</div>
+                </div>
 			</div>
 		</div>
 		<div id="footerDiv">
