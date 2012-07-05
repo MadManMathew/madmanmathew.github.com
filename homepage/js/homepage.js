@@ -18,11 +18,11 @@ function on_doc_ready()
                 $(".testimonialDiv:first").remove();
         });
     
-$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
+/*$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
       {
           alert(data);
       }
-);
+);*/
 
 }
 $(document).ready(on_doc_ready);
