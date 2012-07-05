@@ -2,414 +2,15 @@
 <html>
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
-		<script type="text/javascript">
-</script>
-		<style type="text/css">
-		body {
-			margin: 0px;
-			padding: 0px;
-			background-image: url('assets/background.png');
-		}
-		#headerDiv {
-			background-image: url('assets/headerBackground.png');
-			background-repeat: repeat;
-			height: 88px;
-			width: 100%;
-			padding: 0px;
-			position: relative;
-		}
-		.stiches {
-			height: 2px;
-			width: 100%;
-			background-image: url('assets/stichesBackground.png');
-			background-repeat: repeat;
-		}
-		.headerBottomStiches {
-			position: absolute;
-			bottom: 6px;
-		}
-		.headerTopStiches {
-			position: absolute;
-			top: 6px;
-		}
-		#headerContents {
-			position: relative;
-			top: 30px;
-		}
-		#menuDiv {
-			display: block;
-			position: absolute;
-			top: 0px;
-			right: 0px;
-			margin: 0px;
-			padding: 0px;
-		}
-		li.menuListItem {
-			display: block;
-			float: left;
-			padding: 10px 14px 10px 14px;
-		}
-		a.menuItem {
-			font-family: Arial;
-			text-decoration: none;
-			cursor: default;
-		}
-		a.menuItem:hover {
-			color: grey;
-		}
-		li.currentLink {
-			background-image: url('assets/linkSelected.png');
-			background-repeat: no-repeat;
-		}
-		img.menuItem {
-			margin: auto;
-		}
-		#navigationDiv {
-			background-color: white;
-			height: 350px;
-			width: 100%;
-			position: relative;
-			overflow: hidden;
-		}
-		.greySpace {
-			background-color: #dddddd;
-			height: 2px;
-			width: 100%;
-		}
-		.blueSpace {
-			background-color: #535862;
-			height: 1px;
-			width: 100%;
-		}
-		#recentWorkDiv {
-			height: 315px;
-			position: relative;
-			margin-top: 41px;
-		}
-		#recentWorkHeader {
-		}
-		#recentWorkSpacer {
-			padding-top: 16px;
-			padding-bottom: 18px;
-		}
-
-		h1 {
-			font-size: 2em;
-			padding: 0px;
-			margin: 0px;
-		}
-		h2 {
-			font-size: 1.125em;
-			padding: 0px;
-			margin: 0px;
-		}
-		h3 {
-			font-size: 1em;
-			padding: 0px;
-			margin: 0px;
-		}
-		h4 {
-			font-size: 0.875em;
-			padding: 0px;
-			margin: 0px;
-		}
-		.greyFont {
-			color: #434853;
-		}
-		.greenFont {
-			color: #779e00;
-		}
-		.droidFont {
-			font-family: Droid sans;
-			text-shadow: 1px 1px 1px #FFFFFF;
-		}
-		.spacer {
-			height: 2px;
-			width: 100%;
-			background-image: url('assets/spacer.png');
-			background-repeat: repeat;
-		}
-		.footerSpacer {
-			height: 2px;
-			width: 100%;
-			margin-top: 10px;
-			margin-bottom: 16px;
-			background-image: url('assets/footerSpacer.png');
-			background-repeat: no-repeat;
-		}
-		.contentDiv {
-			width: 966px;
-			margin: auto;
-		}
-		#electricSpacer {
-			height: 22px;
-			margin: auto;
-			position: relative;
-		}
-		.electricHalfSpacer {
-			width: 460px
-		}
-		#electricLeftSpacer {
-			left: 0px;
-			top: 10px;
-			position: absolute;
-		}
-		#electricRightSpacer {
-			right: 0px;
-			top: 10px;
-			position: absolute;
-		}
-		#recentWorkColumnsDiv {
-			width: 100%;
-		}
-		.columnThird {
-			float: left;
-			width: 300px;
-		}
-		.columnSpacer {
-			float: left;
-			width: 33px;
-			height: 100px;
-		}
-		.footerColumnQuarter {
-			float: left;
-			width: 225px;
-		}
-		.footerColumnSpacer {
-			float: left;
-			width: 22px;
-			height: 1px;
-		}
-		#detailsColumnsDiv {
-			height: 144px;
-			float: clear;
-			margin-top: 22px;
-			margin-bottom: 22px;
-		}
-		p {
-			font-family: Arial;
-			font-size: 0.75em;
-			font-color: #57595d;
-			line-height: 1.5em;
-		}
-		#electricIconDiv {
-			margin: auto;
-			width: 11px;
-		}
-		#socialMediaDiv {
-			height: 412px;
-			float: clear;
-			margin-top: 33px;
-		}
-		#footerDiv {
-			height: 218px;
-			background-image: url('assets/footerBackground.png');
-			background-repeat: repeat;
-		}
-		#footerCopyrightDiv {
-			background-image: url('assets/headerBackground.png');
-			background-repeat: repeat;
-			height: 60px;
-			position: relative;
-		}
-		#footerHeaderDiv {
-			padding-top: 28px;
-			height: 44px
-		}
-		.whiteFont {
-			color: white;
-			text-shadow: 1px 1px 1px #16181e;
-		}
-		img.recentWork {
-			border: 1px solid grey;
-			padding: 6px;
-			background-color: white;
-			width: 100%;
-			height: 160px;
-		}
-		.recentWorkColumn {
-			text-align: center;
-		}
-		h4.recentWorkTitle {
-			margin-top: 18px;
-			margin-bottom: 2px;
-		}
-		p.recentWorkDetails {
-			margin: 0px;
-		}
-		.navDiv {
-			height: 350px;
-		}
-		.navContentImageDiv {
-			position: absolute;
-			top: 10px;
-			right: 0px;
-		}
-		p.navP {
-			width: 300px
-		}
-		.navTitle {
-			margin-top: 60px;
-		}
-		.testNavDiv {
-			top: 0px;
-			position: absolute;
-			width: 100% ;
-		}
-		p.footerP {
-			margin: 0px;
-			color: #f2f5f7;
-			text-shadow: 1px 1px 1px #16181e;
-		}
-		img.photoStreamImage {
-			width: 60px;
-			height: 60px;
-			border: 2px solid #606570;
-			float: left;
-		}
-		.photoStreamSpacer {
-			float: left;
-			width: 16px;
-			height: 1px;
-		}
-		a.photoStreamAnchor {
-			background-image: url('assets/socialMediaButtonBackground.png');
-			display: block;
-			width: 100%;
-			height: 100%;
-		}
-		a.photoStreamAnchor:hover {
-			background-image: url('assets/socialMediaButtonSelectedBackground.png');
-			display: block;
-			width: 100%;
-			height: 100%;
-		}
-		img.socialMediaImage {
-			margin: auto;
-			padding-top: 6px;
-			display: block;
-		}
-		li.photoStreamListItem {
-			float: left;
-			display: block;
-			width: 29px;
-			height: 28px;
-		}
-		ul.socialMediaList {
-			padding: 0px;
-			padding-top: 12px;
-			maring: 0px;
-		}
-		h4.contactDetalsSubHeader {
-			font-weight: normal;
-			float: left;
-			padding-left: 10px;
-		}
-		p.contactDetailsAddress {
-			float: left;
-			margin: 0px;
-			margin-left: 5px;
-			width: 140px;
-		}
-		.contactDetailIconDiv {
-			float: left;
-		}
-		.contactDetailRow {
-			width: auto;
-			height: 20px;
-			margin-bottom: 15px;
-		}
-		a.contactEmail {
-			font-size: 0.75em;
-			font-family: Arial;
-			float: left;
-			margin-left: 5px;
-			text-decoration: none;
-		}
-		.copyright {
-			float: left;
-		}
-		.designedBy {
-			float: right;
-		}
-		.copyrightDiv {
-			position: relative;
-			padding-top: 25px;
-		}
-        .copyrightText {
-            color:#bbbdc0;
-            font-family:Arial;
-            text-shadow: 1px 1px 1px #16181e;
-            font-size: 0.75em;
-
-        }
-        strong.copyrightStrong{
-            color:#f2f5f7;
-        }
-        .quoteBuble{
-            border:1px solid #cfd2d7;
-                border-bottom: 0px none;
-                background-color:white;
-                padding:10px;
-                margin-top:12px;
-            }
-        p.quoteText{
-                font-style:italic;
-                margin:auto;
-                margin-top:0px;
-                margin-bttom:0px;
-            }
-        .quoteAuthor{
-                position:absolute;
-                right:0px;
-                bottom:2px;
-            }
-        .socialMediaFont{       
-                font-family:Arial;
-                font-size:.75em;
-            }
-        .quoteAuthorDiv{
-                position:relative;
-            }
-        .socialMediaContentDiv{
-                margin-top:12px;
-                height:auto;
-            }
-            .socialMediaIconDiv{
-                float:left;
-                height:100%;
-            }
-            img.fromTheBlogImage{
-                border: 1px solid gray;
-                padding:2px;
-                width:60px;
-                height:60px;
-            }
-            p.socialMediaP{   
-                margin:0px;
-                margin-left:6px;
-                margin-bottom:8px;   
-            }
-            p.fromTheBlogP{
-                float:left;
-                width:220px;
-            }
-            
-            p.latestTweetP{
-                float:right;
-                width:270px;
-            }
-            .socialMediaSpacer{
-                float:left;
-            }
-		</style>
-		<title></title>
+        <link href="css/homepage.css" media="screen" rel="stylesheet" type="text/css">
+        <!--link rel="shortcut icon" href="assets/snapshot.ico"--> 
+		<title>Snapshot Homepage</title>
 	</head>
 	<body>
 		<div id="headerDiv">
 			<div class="headerTopStiches stiches"></div>
 			<div id="headerContents" class="contentDiv">
-				<img src="assets/snapshotIconLarge.png"> <img src="assets/dotHeaderText.png">
+				<img src="assets/snapshotIconLarge.png">
 				<ul id="menuDiv">
 					<li class="menuListItem currentLink">
 						<h4>
@@ -439,57 +40,7 @@
 				</ul>
 			</div>
 			<div class="headerBottomStiches stiches"></div>
-		</div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript">
-</script><script type="text/javascript">
-	var index = 0;
-			function clickLeft(ev)
-			{
-				index++;
-			   $("#testNav").animate({left:(index)*966+'px'},500,'linear',onLeftComlete);
-			   $("#couldBG").animate({left:(index-1)*200 +'px'},500);
-			}
-			function clickRight(ev)
-			{
-				index--;
-			   $("#testNav").animate({left:(index)*966+'px'},500,'linear',onRightComplete);
-			   $("#couldBG").animate({left:(index-1)*200 +'px'},500);
-			}
-			function onLeftComlete()
-			{
-					//index++;
-			}
-			 function onRightComplete()
-			{
-					//index--;
-			}
-			
-			function on_doc_ready()
-			{
-				$("#navigationDiv").append('\
-				<div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
-					<div id="couldBG" style="position:absolute;left:-200px;width:150%;height:100%;background-image:url(\'assets/cloudsBackground.jpg\')"><\/div> \
-				<\/div> \
-				<div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
-					<div style="margin:auto;width:1186px;"> \
-						<div style="float:left;"><button onclick="clickLeft(event)" style="margin-top:144px;height:48px;width:47px;border:none;background-color:transparent;background-image:url(\'assets/navigationButton.png\')"><\/button> <\/div>\
-						<div style="float:right;"><button onclick="clickRight(event)" style="margin-top:144px;height:48px;width:47px;border:none;background-color:transparent;background-image:url(\'assets/navigationButton.png\')"><\/button> <\/div>\
-					<\/div>\
-					<div  class="contentDiv navDiv" style="overflow:hidden;">\
-						<div id="testNav"  style="left:0px;position:relative;"><\/div>\
-					<\/div>\
-				<\/div>');
-				
-				
-			$(".specialNavDiv").each(function(i,e)
-				{
-					$(e).appendTo("#testNav");
-					$(e).addClass("testNavDiv");
-					$(e).css("left", i * 966 + "px");
-				});
-			}
-			$(document).ready(on_doc_ready);
-
-		</script>
+		</div>
 		<div id="navigationDiv">
 			<div class="specialNavDiv">
 				<div class="navTitle">
@@ -629,10 +180,12 @@
                     <div class="socialMediaIconDiv" >
                         <img class="fromTheBlogImage" src="assets/quoteIcon.png"/>
                     </div>
-				    <p class="socialMediaFont fromTheBlogP socialMediaP">
-					Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
-				    </p>
-                    <p class="socialMediaFont fromTheBlogP socialMediaP" >16 February 2012, <span class="greenFont">6 Comments</span></p>
+                    <div style="height:100%">
+				        <p class="socialMediaFont fromTheBlogP">
+					       Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
+				        </p>
+                        <p class="socialMediaFont fromTheBlogP lightGreyFont" >16 February 2012, <span class="greenFont">6 Comments</span></p>
+                    </div>
                     <div class="spacer socialMediaSpacer" ></div>
                 </div>
 			</div>
@@ -643,12 +196,12 @@
 				</h2>
                 <div class="socialMediaContentDiv">
                     <div class="socialMediaIconDiv">
-                        <img src="assets/quoteIcon.png"/>
+                        <img class="quoteIcon" src="assets/quoteIcon.png"/>
                     </div>
-				    <p class="socialMediaFont latestTweetP socialMediaP" >
+				    <p class="socialMediaFont latestTweetP" >
 					Donec pulvinar, lectus quis tempus tempus. hendrerit quis.
 				    </p>
-                    <p class="socialMediaFont latestTweetP socialMediaP" >6 days ago</p>
+                    <p class="socialMediaFont latestTweetP  lightGreyFont" >6 days ago</p>
                     <div class="spacer socialMediaSpacer" ></div>
                 </div>
 			</div>
@@ -664,7 +217,7 @@
                 </div>
                 <div class="quoteAuthorDiv">
                     <img src="assets/quoteBubbleBase.png"/>
-                    <div class="quoteAuthor socialMediaFont"><span class="greenFont">John Smith,</span> FlashDeveloper</div>
+                    <div class="quoteAuthor socialMediaFont  lightGreyFont"><span class="greenFont">John Smith,</span> FlashDeveloper</div>
                 </div>
 			</div>
 		</div>
@@ -780,5 +333,9 @@
 			 <div class="headerTopStiches stiches"></div>
 			 <div class="headerBottomStiches stiches"></div>
 		</div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script src="js/navigation.js"></script>       
+	    <script src="js/homepage.js"></script>       
 	</body>
 </html>
