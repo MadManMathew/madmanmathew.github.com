@@ -18,7 +18,7 @@ function on_doc_ready()
                 $(".testimonialDiv:first").remove();
         });
     
-$.ajax("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
+$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
       {
           alert(data);
       }
