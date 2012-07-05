@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
+    min-width:1000px;
     background-image: url('../assets/background.png');
 }
 #headerDiv {
@@ -8,12 +9,14 @@ body {
     background-repeat: repeat;
     height: 88px;
     width: 100%;
+    min-width:966px;
     padding: 0px;
     position: relative;
 }
 .stiches {
     height: 2px;
     width: 100%;
+    min-width:966px;
     background-image: url('../assets/stichesBackground.png');
     background-repeat: repeat;
 }
@@ -61,6 +64,7 @@ img.menuItem {
     background-color: white;
     height: 350px;
     width: 100%;
+    min-width:966px;
     position: relative;
     overflow: hidden;
 }
@@ -131,6 +135,7 @@ h4 {
 }
 .contentDiv {
     width: 966px;
+    min-width:966px;
     margin: auto;
 }
 #electricSpacer {
@@ -333,14 +338,14 @@ a.contactEmail {
 strong.copyrightStrong{
     color:#f2f5f7;
 }
-.quoteBuble{
-    border:1px solid #cfd2d7;
+.testimonialBubble{
+        border:1px solid #cfd2d7;
         border-bottom: 0px none;
         background-color:white;
         padding:10px;
         margin-top:12px;
     }
-p.quoteText{
+p.testimonialQuote{
         font-style:italic;
         margin:auto;
         margin-top:0px;

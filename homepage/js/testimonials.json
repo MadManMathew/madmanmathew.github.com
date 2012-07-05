@@ -1,0 +1,11 @@
+{ 
+    "testimonials": 
+        [  
+            { "quote":"\"Vivamus imperdiet condimentum diam, eget placerat felis consectetur id. Donec eget orci metus, ac adipiscing nunc. Pellentesque fermentum, ante ac interdum ullamcorper.\"",
+             "author":"Jones Doe",
+             "title":"Web Designer"},
+            { "quote":"\"Pellentesque fermentum, ante ac interdum ullamcorper, lectus nulla lobortis libero.\"",
+              "author":"Jane Doe",
+              "title":"Flash Developper"}  
+        ] 
+}
