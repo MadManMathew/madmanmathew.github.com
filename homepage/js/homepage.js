@@ -2,12 +2,19 @@ function on_doc_ready()
 {   
     new Navigation().init("#navigationDiv",".specialNavDiv","assets/cloudsBackground.jpg","#leftButton","#rightButton","navRad1");
 
+    /*$('input[name=navRad1]:radio').change(function()
+                                                 {
+                                                     alert("test");
+                                                 });*/
     $(".radioSpan").click(function(ev){
-        $(ev.target).find("input").trigger('click');
-        var radGroupName = $(ev.target).find("input").attr("name");
+        var radGroupName = $(ev.target).prev().attr("name");
         if(radGroupName!=null)
-            $('input[name='+ radGroupName + ']:radio').parent().removeClass("radioSpanSelected");
-        $(ev.target).addClass("radioSpanSelected");
+        {
+            $('input[name='+ radGroupName + ']:radio').removeAttr("checked");
+
+        }
+        $(ev.target).prev().trigger('click');
+        $(ev.target).prev().attr("checked","checked");
 
     });
     

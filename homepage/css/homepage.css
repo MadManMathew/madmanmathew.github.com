@@ -444,25 +444,26 @@ p.latestTweetP{
 }
 .navRadioGroup{
     position:relative;
-    width:100px;
+    width:80px;
     float:right;
     margin-top:10px;
 }
 .navRadioGroup2{
     position:relative;
-    width:100px;
+    width:80px;
     float:right;
-    margin:-16px;
+    margin-top:-16px;
 }
 span.radioSpan{
-        background-image:url('../assets/navRadioButton.png');
+    background-image:url('../assets/navRadioButton.png');
+    display:inline-block;
+    width:18px;
+    height:18px;
 
 }
-span.radioSpanSelected{
+input[checked=checked] + span{
         background-image:url('../assets/navRadioButton_selected.png');
-
 }
 input[type=radio]{
-    visibility:hidden;
-    width:14px;
+    display:none;
 }
