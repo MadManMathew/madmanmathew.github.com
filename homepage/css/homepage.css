@@ -61,7 +61,6 @@ img.menuItem {
     margin: auto;
 }
 #navigationDiv {
-    background-color: white;
     height: 350px;
     width: 100%;
     min-width:966px;
@@ -217,7 +216,7 @@ p {
     color: white;
     text-shadow: 1px 1px 1px #16181e;
 }
-img.recentWork {
+.recentWork img {
     border: 1px solid grey;
     padding: 6px;
     background-color: white;
@@ -227,14 +226,21 @@ img.recentWork {
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
 }
-.recentWorkColumn {
+.recentWork {
     text-align: center;
 }
-h4.recentWorkTitle {
+.recentWork:hover img{
+    border: 3px solid #779e00; 
+}
+
+.recentWork h4 {
     margin-top: 18px;
     margin-bottom: 2px;
 }
-p.recentWorkDetails {
+.recentWork:hover {
+    color: #779e00;
+}
+.recentWork p {
     margin: 0px;
 }
 .navContentImageDiv {
@@ -395,36 +401,55 @@ p.fromTheBlogP{
 p.latestTweetP{
     margin-left:36px;
 }
-button.navButtonLeft,button.navButtonRight{
+#leftButton,#rightButton{
     height:48px;
     width:47px;
     border:none;
     margin-top:144px;
     background-color:transparent;
 }
-button.navButtonLeft{
-        background-image:url('../assets/leftButton.png');
+.navButtonDiv{
+    left:-110px;
+    width:1186px;
+    position:relative;
+    height:100%;
 }
-button.navButtonLeft:hover{
+#leftButton{
+    float:left;
+    background-image:url('../assets/leftButton.png');
+}
+#leftButton:hover{
     background-image:url('../assets/leftButton_over.png');
 }
 
-button.navButtonLeft:active{
+#leftButton:active{
     background-image:url('../assets/leftButton_down.png');
 }
-button.navButtonLeft:disabled{
+#leftButton:disabled{
     background-image:url('../assets/leftButton_disabled.png');
 }
-button.navButtonRight{
-        background-image:url('../assets/rightButton.png');
+#rightButton{
+    float:right;
+    background-image:url('../assets/rightButton.png');
 }
-button.navButtonRight:hover{
+#rightButton:hover{
     background-image:url('../assets/rightButton_over.png');
 }
 
-button.navButtonRight:active{
+#rightButton:active{
     background-image:url('../assets/rightButton_down.png');
 }
-button.navButtonRight:disabled{
+#rightButton:disabled{
     background-image:url('../assets/rightButton_disabled.png');
+}
+.navRadioGroup{
+    position:relative;
+    width:100px;
+    float:right;
+    margin-top:10px;
+}
+.navRadioGroup2{
+    position:relative;
+    width:100px;
+    float:right;
 }

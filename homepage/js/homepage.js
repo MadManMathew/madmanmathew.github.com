@@ -1,5 +1,20 @@
-initialNavigation("#navigationDiv",".specialNavDiv","assets/cloudsBackground.jpg","navButtonLeft","navButtonRight");
- 
+var recentWorkJSon = { 
+    "recentWork": 
+        [  
+            { "img":"assets/recentWork1.png",
+             "title":"Graphic River",
+             "details":"Print Design"},
+            { "img":"assets/recentWork2.png",
+             "title":"Dietary Couseling",
+             "details":"Website / Interface Design"},
+            { "img":"assets/recentWork3.png",
+             "title":"Rockable Press",
+             "details":"Branding"}
+        ] 
+};
+
+initialNavigation("#navigationDiv",".specialNavDiv","assets/cloudsBackground.jpg","#leftButton","#rightButton","navRad1");
+initNavigation2("#recentWorkColumnsDiv","recentWork columnThird droidFont greyFont",recentWorkJSon,null);
 function on_doc_ready()
 {   
     $.getJSON('js/testimonials.json',
