@@ -452,4 +452,17 @@ p.latestTweetP{
     position:relative;
     width:100px;
     float:right;
+    margin:-16px;
+}
+span.radioSpan{
+        background-image:url('../assets/navRadioButton.png');
+
+}
+span.radioSpanSelected{
+        background-image:url('../assets/navRadioButton_selected.png');
+
+}
+input[type=radio]{
+    visibility:hidden;
+    width:14px;
 }

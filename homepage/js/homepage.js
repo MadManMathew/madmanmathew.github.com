@@ -1,22 +1,20 @@
-var recentWorkJSon = { 
-    "recentWork": 
-        [  
-            { "img":"assets/recentWork1.png",
-             "title":"Graphic River",
-             "details":"Print Design"},
-            { "img":"assets/recentWork2.png",
-             "title":"Dietary Couseling",
-             "details":"Website / Interface Design"},
-            { "img":"assets/recentWork3.png",
-             "title":"Rockable Press",
-             "details":"Branding"}
-        ] 
-};
-
-initialNavigation("#navigationDiv",".specialNavDiv","assets/cloudsBackground.jpg","#leftButton","#rightButton","navRad1");
-initNavigation2("#recentWorkColumnsDiv","recentWork columnThird droidFont greyFont",recentWorkJSon,null);
 function on_doc_ready()
 {   
+    new Navigation().init("#navigationDiv",".specialNavDiv","assets/cloudsBackground.jpg","#leftButton","#rightButton","navRad1");
+
+    $(".radioSpan").click(function(ev){
+        $(ev.target).find("input").trigger('click');
+        var radGroupName = $(ev.target).find("input").attr("name");
+        if(radGroupName!=null)
+            $('input[name='+ radGroupName + ']:radio').parent().removeClass("radioSpanSelected");
+        $(ev.target).addClass("radioSpanSelected");
+
+    });
+    
+    $.getJSON('js/recentWork.json', function(json){
+            new Navigation2().init("#recentWorkColumnsDiv","recentWork columnThird droidFont greyFont",json,"navRad2");
+    });
+    
     $.getJSON('js/testimonials.json',
         function(json) {
             $(json.testimonials).each(function (i,testimonial)
@@ -33,11 +31,11 @@ function on_doc_ready()
                 $(".testimonialDiv:first").remove();
         });
     
-/*$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
-      {
-          alert(data);
-      }
-);*/
+    /*$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
+          {
+              alert(data);
+          }
+    );*/
 
 }
 $(document).ready(on_doc_ready);
