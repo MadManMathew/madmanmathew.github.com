@@ -53,9 +53,8 @@ function Navigation()
             $(e).css("left", i * properties.width + "px");
             $(e).css("position","absolute");
             $(e).css("width",properties.width+"px");
-            $(e).css("top","0px");     
             $(e).css("height",properties.height+"px");
-
+            $(e).css("top","0px");            
             count++;
         });
     }

@@ -1,11 +1,8 @@
 function on_doc_ready()
 {   
-    new Navigation().init("#navigationDiv",".specialNavDiv","assets/cloudsBackground.jpg","#leftButton","#rightButton","navRad1");
+    new Navigation().init("#navigationDiv",".specialNavDiv","#leftButton","#rightButton","navRad1",    
+                          { width: 966, height: 350, backgroundUrl: 'assets/cloudsBackground.jpg', duration:500});
 
-    /*$('input[name=navRad1]:radio').change(function()
-                                                 {
-                                                     alert("test");
-                                                 });*/
     $(".radioSpan").click(function(ev){
         var radGroupName = $(ev.target).prev().attr("name");
         if(radGroupName!=null)
@@ -18,7 +15,7 @@ function on_doc_ready()
 
     });
     
-    $.getJSON('js/recentWork.json', function(json){
+    /*$.getJSON('js/recentWork.json', function(json){
             new Navigation2().init("#recentWorkColumnsDiv","recentWork columnThird droidFont greyFont",json,"navRad2");
     });
     
@@ -37,7 +34,7 @@ function on_doc_ready()
             if(json.testimonials.length == 0)
                 $(".testimonialDiv:first").remove();
         });
-    
+    */
     /*$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
           {
               alert(data);
