@@ -496,6 +496,10 @@ p.detailsP{
 .linkedinIcon{
     background-image:url('../assets/linkedinIconSmall.png');
 }
+.hiddenAtStart {
+    visibility: hidden;
+}
+
 .flickrIcon{
     background-image:url('../assets/flickrIconSmall.png');  
 }

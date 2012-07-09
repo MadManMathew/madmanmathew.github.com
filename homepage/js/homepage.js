@@ -2,7 +2,7 @@ function on_doc_ready()
 {   
     new Navigation().init("#navigationDiv",".specialNavDiv","#leftButton","#rightButton","navRad1",    
                           { width: 966, height: 350, backgroundUrl: 'assets/cloudsBackground.jpg', duration:500});
-
+    $(".hiddenAtStart").css("visibility","visible");
     $(".radioSpan").click(function(ev){
         var radGroupName = $(ev.target).prev().attr("name");
         if(radGroupName!=null)
