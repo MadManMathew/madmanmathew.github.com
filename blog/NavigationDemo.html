@@ -2,6 +2,9 @@
 <html>
 	<head>
         <style>
+            body{
+                margin:0px;   
+            }
             #leftButton,#rightButton{
                 height:48px;
                 width:47px;
@@ -69,7 +72,7 @@
                 display:none;
             }
             #navigationDiv {
-                height: 280px;
+                height: 260px;
                 width: 100%;
                 min-width:600px;
                 position: relative;
@@ -82,7 +85,7 @@
             }
             .navContentImageDiv {
                 position: absolute;
-                bottom: 10px;
+                bottom: 0px;
                 right: 0px;
             }
             h1{
@@ -149,7 +152,7 @@
         <script src="js/NavigationDemo.js"></script>      
 	    <script>
             new Navigation().init("#navigationDiv",".specialNavDiv","#leftButton","#rightButton","navRad1",    
-                          { width: 600, height: 280, backgroundUrl: 'assets/cloudsBackground.jpg', duration:500});
+                          { width: 600, height: 260, backgroundUrl: 'assets/cloudsBackground.jpg', duration:500});
 
             $(".radioSpan").click(function(ev){
                 var radGroupName = $(ev.target).prev().attr("name");
