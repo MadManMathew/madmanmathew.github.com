@@ -401,6 +401,13 @@ p.fromTheBlogP{
 p.latestTweetP{
     margin-left:36px;
 }
+.controlsDiv{
+    position:absolute;
+    top:0px;
+    left:0px;
+    right:0px;
+    bottom:0px;   
+}
 #leftButton,#rightButton{
     height:48px;
     width:47px;

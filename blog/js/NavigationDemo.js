@@ -25,17 +25,15 @@ function Navigation()
                properties.duration = newProperties.duration;
         }
         
-        var navHtml = '<div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;">';
+        var navHtml = '';
         if(properties.backgroundUrl != null)
         {
-            navHtml+='<div id="'+navBackgroundId+'" style="position:absolute;left:0px;width:400%;height:100%;background-image:url(\''+ properties.backgroundUrl + '\')"></div>';
+            navHtml+='<div id="'+navBackgroundId+'" style="position:absolute;left:0px;width:400%;height:100%;background-image:url(\''+ properties.backgroundUrl + '\')">\
+                      </div>';
         }    
-        navHtml+='</div> \
-        <div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
-            <div  style="width:'+properties.width+'px;margin:auto;overflow:hidden;height:'+properties.height+'px;top:0px;position:relative;">\
-                <div id="'+navContainerId+'"  style="left:0px;position:relative;"></div>\
-            </div>\
-        </div> ';
+        navHtml+=' <div  style="width:'+properties.width+'px;margin:auto;overflow:hidden;height:'+properties.height+'px;top:0px;position:relative;">\
+                        <div id="'+navContainerId+'"  style="left:0px;position:relative;"></div>\
+                    </div>';
         $(containerSelector).prepend(navHtml);
             
         leftButtonSelector = buttonLeftSelector;

@@ -15,7 +15,7 @@ function on_doc_ready()
 
     });
     
-    /*$.getJSON('js/recentWork.json', function(json){
+    $.getJSON('js/recentWork.json', function(json){
             new Navigation2().init("#recentWorkColumnsDiv","recentWork columnThird droidFont greyFont",json,"navRad2");
     });
     
@@ -34,12 +34,6 @@ function on_doc_ready()
             if(json.testimonials.length == 0)
                 $(".testimonialDiv:first").remove();
         });
-    */
-    /*$.get("https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=MadManMathew", function(data)
-          {
-              alert(data);
-          }
-    );*/
 
 }
 $(document).ready(on_doc_ready);

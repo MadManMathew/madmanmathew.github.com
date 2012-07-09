@@ -25,17 +25,14 @@ function Navigation()
                properties.duration = newProperties.duration;
         }
         
-        var navHtml = '<div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;">';
+        var navHtml = '';
         if(properties.backgroundUrl != null)
         {
             navHtml+='<div id="'+navBackgroundId+'" style="position:absolute;left:0px;width:400%;height:100%;background-image:url(\''+ properties.backgroundUrl + '\')"></div>';
         }    
-        navHtml+='</div> \
-        <div style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;"> \
-            <div  style="width:'+properties.width+'px;margin:auto;overflow:hidden;height:'+properties.height+'px;top:0px;position:relative;">\
-                <div id="'+navContainerId+'"  style="left:0px;position:relative;"></div>\
-            </div>\
-        </div> ';
+        navHtml+='<div  style="width:'+properties.width+'px;margin:auto;overflow:hidden;height:'+properties.height+'px;top:0px;position:relative;">\
+                    <div id="'+navContainerId+'"  style="left:0px;position:relative;"></div>\
+                </div>';
         $(containerSelector).prepend(navHtml);
             
         leftButtonSelector = buttonLeftSelector;
@@ -128,3 +125,57 @@ function Navigation()
             });
     }
 }
+
+function Navigation2()
+{
+    var index = 0;
+    var count = 0;
+    var radSelector = "";
+    var jsonData;
+    var containerSelector;
+    var columnClass;
+    
+    this.init = function (containerSel,columnCl,json,radGroupName)
+    {        
+        jsonData = json;
+        containerSelector = containerSel;
+        columnClass = columnCl;
+        updateColumns();
+        radSelector = 'input[name='+ radGroupName + ']:radio';
+        $(radSelector).click(radClick);   
+    };
+    
+    function updateColumns()
+    {
+        $(containerSelector).html("");
+        for(var i =index; i < index+3; i++)
+        {
+            $(containerSelector).append('\
+                <div class="'+columnClass+'">\
+                        <img src="'+ jsonData.recentWork[i].img +'">\
+                        <h4 >'+ jsonData.recentWork[i].title +'</h4>\
+                        <p >'+ jsonData.recentWork[i].details +'</p>\
+                </div>');
+            if(i<index+2)
+                   $(containerSelector).append('<div class="columnSpacer"></div>');
+        }
+        $(containerSelector).animate( {opacity:'1.0'},500 );  
+    }
+    
+    function radClick(ev)
+    {
+        $(radSelector).each(function (i,e)
+            {
+                if(e == ev.target)
+                {
+                    index = i;
+                    $(containerSelector).animate(
+                        {opacity:'0.0'},
+                        500 ,  
+                        function(){
+                            updateColumns();
+                    });
+                }
+            });
+    }
+}    
