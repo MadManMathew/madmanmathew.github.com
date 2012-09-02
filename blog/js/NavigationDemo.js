@@ -7,10 +7,12 @@ function Navigation()
     var rightButtonSelector = "";
     var radSelector = "";
     var properties = { width: 600, height: 400, backgroundUrl: null, duration:500};
-    
+    var isAutoRotate =  true;
+    var defaultRotateDuration = 7000;
+    var autoRotateDuration = defaultRotateDuration;
     var navBackgroundId = "navBackground";
     var navContainerId = "navContainer";
-    
+    var timeoutId;
     this.init = function (containerSelector,specialComponentSelector,buttonLeftSelector,buttonRightSelector,radGroupName,newProperties)
     {
         if(newProperties!=null)
@@ -55,18 +57,39 @@ function Navigation()
             $(e).css("top","0px");            
             count++;
         });
+        resetInterval();
     }
-    function clickLeft(ev)
+    function resetInterval()
     {
-        index--;
-        navigate(ev,onLeftComplete);
-    
+        if(isAutoRotate)
+        {
+            if(timeoutId != null)
+                clearInterval(timeoutId);
+            timeoutId = setInterval(function autoRotate()
+                {
+                    if(index<count-1)
+                    {
+                        clickRight(null);
+                    }
+                    else
+                    {
+                        index = 0;
+                        navigate(null,onLeftComplete);
+                    }
+                },autoRotateDuration);
+        }
     }
     function clickRight(ev)
     {
         index++;
-         navigate(ev,onRightComplete)
-        
+        resetInterval();
+        navigate(ev,onRightComplete);
+    }
+    function clickLeft(ev)
+    {
+        index--;
+        resetInterval();
+        navigate(ev,onLeftComplete);
     }
     function navigate(ev,onComplete)
     { 
@@ -78,16 +101,15 @@ function Navigation()
        $("#"+navContainerId).animate({left:(-index)*properties.width+'px'},properties.duration,'linear',onComplete);
         
         if(properties.backgroundUrl!=null)
-            $("#"+navBackgroundId).animate({left:(-index-1)*properties.width/3 +'px'},properties.duration)
+            $("#"+navBackgroundId).animate({left:(-index-1)*properties.width/count +'px'},properties.duration)
     }
     function onLeftComplete()
     {
         if(index < count-1)
             $(rightButtonSelector).removeAttr("disabled");
         setRadio();
-        
     }
-     function onRightComplete()
+    function onRightComplete()
     {
         if(index > 0)
             $(leftButtonSelector).removeAttr("disabled");
@@ -98,15 +120,14 @@ function Navigation()
         $(radSelector).each(function (i,e)
             {
                 if(i == index)
-                {
                     $(e).attr("checked","checked");
-                }
                 else
                     $(e).removeAttr("checked");
             });
     }
     function radClick(ev)
     {
+        resetInterval();
         $(radSelector).each(function (i,e)
             {
                 if(e == ev.target)

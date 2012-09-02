@@ -65,7 +65,7 @@
                 height:18px;
             
             }
-            input[checked=checked] + span{
+            input[type=radio][name=navRad1][checked=checked] + span{
                     background-image:url('assets/navRadioButton_selected.png');
             }
             input[type=radio]{
@@ -156,17 +156,17 @@
             new Navigation().init("#navigationDiv",".specialNavDiv","#leftButton","#rightButton","navRad1",    
                           { width: 600, height: 260, backgroundUrl: 'assets/cloudsBackground.jpg', duration:500});
 
-            $(".radioSpan").click(function(ev){
-                var radGroupName = $(ev.target).prev().attr("name");
-                if(radGroupName!=null)
-                {
-                    $('input[name='+ radGroupName + ']:radio').removeAttr("checked");
-        
-                }
-                $(ev.target).prev().trigger('click');
-                $(ev.target).prev().attr("checked","checked");
-        
-            });
+$(".radioSpan").click(function(ev){
+    var radGroupName = $(ev.target).prev().attr("name");
+    if(radGroupName!=null)
+    {
+        $('input[name='+ radGroupName + ']:radio').removeAttr("checked");
+
+    }
+    $(ev.target).prev().trigger('click');
+    $(ev.target).prev().attr("checked","checked");
+
+});
         </script>       
 	</body>
 </html>
