@@ -85,6 +85,7 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isForward){
 
 FullAjaxJS.onPushPopState = function(event)
 {   
+    alert("testing");
     if(event.state){
         var stateObj = event.state;
         FullAjaxJS.callPopPushFunction(stateObj);
