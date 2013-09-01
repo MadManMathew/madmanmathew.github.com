@@ -20,17 +20,16 @@ FullAjaxJS.initFullAjax = function(){
 FullAjaxJS.initAnchors = function(){
     $("a.ajaxAnchor").unbind("click");
     $("a.ajaxAnchor").click(function(event){
-		FullAjaxJS.makeAjaxCall(this);
+        
+        var updateContainerId = $(this).attr("data-update-container-id");
+        var aHref = $(this).attr("href");
+		FullAjaxJS.makeAjaxCall(aHref,updateContainerId,true);
         event.preventDefault();
         return false;
     });
 };
 
-FullAjaxJS.makeAjaxCall = function(anchor){
-    
-    var updateContainerId = $(anchor).attr("data-update-container-id");
-    var aHref = $(anchor).attr("href");
-    
+FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isForward){
     if(FullAjaxJS.loaderDiv){
         var containerToUpdate = $("#" + updateContainerId);  
         containerToUpdate.css("position","relative");
@@ -40,7 +39,7 @@ FullAjaxJS.makeAjaxCall = function(anchor){
     $.ajax({type: "GET",dataType: 'html', url: FullAjaxJS.rootPath + aHref
         })
         .done(function(data) {
-            FullAjaxJS.updateContent(data, updateContainerId, aHref, true);
+            FullAjaxJS.updateContent(data, updateContainerId, aHref, isForward);
         })
         .fail(function(error) { 
             throw error;
@@ -79,38 +78,24 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isForward){
                     FullAjaxJS.executeOnReady();
             });
     }
-    
-    
 };
 
 FullAjaxJS.onPushPopState = function(event)
 {   
-    alert("testing");
     if(event.state){
         var stateObj = event.state;
-        FullAjaxJS.callPopPushFunction(stateObj);
+        FullAjaxJS.makeAjaxCall(stateObj.aHref, stateObj.updateContainerId, false);
+
     }
     else if(event.state == null){
         var stateObj = FullAjaxJS.initState;    
         if(FullAjaxJS.initState.initialLoad == false){
-            FullAjaxJS.callPopPushFunction(stateObj);
+            FullAjaxJS.makeAjaxCall(stateObj.aHref, stateObj.updateContainerId, false);
         }
         else{
             FullAjaxJS.initState.initialLoad = false;
         }
     }
-};
-
-FullAjaxJS.callPopPushFunction = function(stateObj)
-{    
-    $.ajax({type: "GET",dataType: 'html', url: FullAjaxJS.rootPath + stateObj.aHref
-        })
-        .done(function(data) {
-            FullAjaxJS.updateContent(data, stateObj.updateContainerId, stateObj.aHref, false);
-        })
-        .fail(function(error) { 
-            throw error;
-        });
 };
 
 FullAjaxJS.executeOnReady = function(){
