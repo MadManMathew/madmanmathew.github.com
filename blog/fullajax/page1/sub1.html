@@ -1,10 +1,9 @@
     
 <html>
 <head>
-<link href="css/template.css" media="screen" rel="stylesheet"
-	type="text/css">
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/full-ajax.js"></script>
+<link href="../css/template.css" media="screen" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/full-ajax.js"></script>
 
 </head>
 <body>
@@ -58,7 +57,10 @@
 		</div>
 	</div>
 <div id="loader-div">
-    <img src="/assets/ajax-loader.gif"/>
+    <div id="loader-content">
+        <img src="../assets/ajax-loader.gif" /><h2 style="display:inline-block;">Loading</h2>
+    </div>
+    <div id="loader-overlay" ></div>
 </div>
 </body>
 </html>

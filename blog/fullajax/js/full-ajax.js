@@ -1,6 +1,7 @@
 
 window.FullAjaxJS = window.FullAjaxJS==null ? {} : FullAjaxJS; 
 window.FullAjaxJS.testMode = true;
+window.FullAjaxJS.rootPath = "/blog/fullajax";
 
 
 
@@ -36,7 +37,7 @@ FullAjaxJS.makeAjaxCall = function(anchor){
         containerToUpdate.append(FullAjaxJS.loaderDiv);
     }
     var callAjax = function(){
-    $.ajax({type: "GET",dataType: 'html', url:  aHref
+    $.ajax({type: "GET",dataType: 'html', url: FullAjaxJS.rootPath + aHref
         })
         .done(function(data) {
             FullAjaxJS.updateContent(data, updateContainerId, aHref, true);
@@ -101,7 +102,7 @@ FullAjaxJS.onPushPopState = function(event)
 
 FullAjaxJS.callPopPushFunction = function(stateObj)
 {    
-    $.ajax({type: "GET",dataType: 'html', url:  stateObj.aHref
+    $.ajax({type: "GET",dataType: 'html', url: FullAjaxJS.rootPath + stateObj.aHref
         })
         .done(function(data) {
             FullAjaxJS.updateContent(data, stateObj.updateContainerId, stateObj.aHref, false);
