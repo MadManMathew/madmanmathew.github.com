@@ -1,0 +1,72 @@
+    
+<html>
+<head>
+<link href="css/template.css" media="screen" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/full-ajax.js"></script>
+
+</head>
+<body>
+	<div id="fistDiv">
+		<div id="headerPanel">
+			<div id="codeFoo">
+				<a class="ajaxAnchor" href="/index.html" data-update-container-id="mid" style="text-decoration: none;">
+					<p style="text-align: center; margin: 0;">
+						<span id="codeText">Full Ajax</span>
+					</p>
+				</a>
+			</div>
+		</div>
+		<nav id="menu">
+			<ul>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"  href="/page1.html">Page 1</a></li>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"   href="/page2.html">Page 2</a></li>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"   href="/page3.html">Page 3</a></li>
+			</ul>
+		</nav>
+		<div id="midborder">
+			<div id="mid">
+				<div id="leftPanel">
+                    <span class="questionHeader">Page 1</span>
+
+					<nav id="subMenu">
+                        
+						<ul width="80%"
+							style="height: inherit; margin: auto; text-align: center">
+                            <li><a class="submenua ajaxAnchor" data-update-container-id="mainContent"  href="/page1/sub1.html">Sub Page 1</a></li>
+				            <li><a class="submenua ajaxAnchor" data-update-container-id="mainContent"  href="/page1/sub2.html">Sub Page 2</a></li>
+						</ul>
+					</nav>
+                                        
+                    <p class="contentText">
+                        
+                    </p>
+
+				</div>
+
+				<div id="mainContent">
+					<div id="answer">
+						<span class="questionHeader">Page 1</span>
+						<p class="contentText">
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+						</p>
+                        <div id="scripts">
+                        <script>
+                            $("#jstest").append($("<div>INLINE JAVASCRIPT EXCUTED</div>"));
+                        </script>
+                        <h3 id="jstest"></h3>
+                        <script src="/js/test.js"/>
+                                                    <script src="/js/test.js"/>
+
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="loader-div">
+    <img src="/assets/ajax-loader.gif"/>
+</div>
+</body>
+</html>

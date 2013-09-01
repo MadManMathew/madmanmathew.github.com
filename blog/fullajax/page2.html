@@ -1,0 +1,63 @@
+    
+<html>
+<head>
+<link href="css/template.css" media="screen" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/full-ajax.js"></script>
+
+</head>
+<body>
+	<div id="fistDiv">
+		<div id="headerPanel">
+			<div id="codeFoo">
+				<a class="ajaxAnchor" href="/ndex.html" data-update-container-id="mid" style="text-decoration: none;">
+					<p style="text-align: center; margin: 0;">
+						<span id="codeText">Full Ajax</span>
+					</p>
+				</a>
+			</div>
+		</div>
+		<nav id="menu">
+			<ul>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"  href="/page1.html">Page 1</a></li>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"   href="/page2.html">Page 2</a></li>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"   href="/page3.html">Page 3</a></li>
+
+			</ul>
+		</nav>
+		<div id="midborder">
+			<div id="mid">
+				<div id="leftPanel">
+					  <span class="questionHeader">Page 2</span>
+
+					<nav id="subMenu">
+                        
+						<ul width="80%"
+							style="height: inherit; margin: auto; text-align: center">
+							<li><a class="submenua ajaxAnchor" data-update-container-id="mainContent"  href="/page2/sub1.html">Sub Page 1</a></li>
+						</ul>
+					</nav>
+
+				</div>
+
+				<div id="mainContent">
+					<div id="answer">
+						<span class="questionHeader">Page 2</span>
+						<p class="contentText">
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+						</p>
+					</div>
+                    <script>
+                            $("#jstest").html("JAVASCRIPT EXCUTED");
+                        </script>
+                        <h3 id="jstest"></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="loader-div">
+    <img src="/assets/ajax-loader.gif"/>
+</div>
+</body>
+</html>

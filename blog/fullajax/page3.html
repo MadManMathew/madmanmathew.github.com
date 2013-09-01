@@ -1,0 +1,55 @@
+    
+<html>
+<head>
+<link href="css/template.css" media="screen" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/full-ajax.js"></script>
+
+</head>
+<body>
+	<div id="fistDiv">
+		<div id="headerPanel">
+			<div id="codeFoo">
+				<a class="ajaxAnchor" href="/index.html" data-update-container-id="mid" style="text-decoration: none;">
+					<p style="text-align: center; margin: 0;">
+						<span id="codeText">Full Ajax</span>
+					</p>
+				</a>
+			</div>
+		</div>
+		<nav id="menu">
+			<ul>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"  href="/page1.html">Page 1</a></li>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"   href="/page2.html">Page 2</a></li>
+				<li><a class="menua ajaxAnchor" data-update-container-id="mid"   href="/page3.html">Page 3</a></li>
+			</ul>
+		</nav>
+		<div id="midborder">
+			<div id="mid">
+				<div id="leftPanel">
+					  <span class="questionHeader">Page 3</span>
+
+					
+				</div>
+
+				<div id="mainContent">
+					<div id="answer">
+						<span class="questionHeader">Page 3</span>
+						<p class="contentText">
+There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+						</p>
+					</div>
+                    <script>
+                            $("#jstest").html("JAVASCRIPT EXCUTED");
+                        </script>
+                        <h3 id="jstest"></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="loader-div">
+    <img src="/assets/ajax-loader.gif"/>
+</div>
+</body>
+</html>
