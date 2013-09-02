@@ -8,7 +8,7 @@ FullAjaxJS.initFullAjax = function(){
     FullAjaxJS.initAnchors();
     if(window.onpopstate == null){
         window.onpopstate = FullAjaxJS.onPushPopState;
-        FullAjaxJS.initState =  {"aHref":document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
+        FullAjaxJS.initState =  {"aHref": "/" +document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
     }
     FullAjaxJS.loaderDiv = $("#loader-div");
     $("#loader-div").remove();
