@@ -52,8 +52,8 @@ border: 2px solid;
 background: #00B4FF;
 }
 #mid {
-height: 100%;
-width: 320px;
+height: 320px;
+width: 100%;
 box-sizing: border-box;
 border-style: solid;
 border-width: 0px 2px 2px 2px;

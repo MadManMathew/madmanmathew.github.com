@@ -2,8 +2,6 @@
 window.FullAjaxJS = window.FullAjaxJS==null ? {} : FullAjaxJS; 
 window.FullAjaxJS.testMode = false;
 
-
-
 FullAjaxJS.initFullAjax = function(){
     FullAjaxJS.initAnchors();
     if(window.onpopstate == null){
@@ -28,7 +26,7 @@ FullAjaxJS.initAnchors = function(){
     });
 };
 
-FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isForward){
+FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isNew){
     if(FullAjaxJS.loaderDiv){
         var containerToUpdate = $("#" + updateContainerId);  
         containerToUpdate.css("position","relative");
@@ -38,7 +36,7 @@ FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isForward){
     $.ajax({type: "GET",dataType: 'html', url: aHref
         })
         .done(function(data) {
-            FullAjaxJS.updateContent(data, updateContainerId, aHref, isForward);
+            FullAjaxJS.updateContent(data, updateContainerId, aHref, isNew);
         })
         .fail(function(error) { 
             throw error;
@@ -50,8 +48,8 @@ FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isForward){
         callAjax();
 };
 
-FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isForward){
-    if(isForward == true){
+FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
+    if(isNew){
         var stateObj = {"aHref":aHref , "updateContainerId":updateContainerId};
         history.pushState( stateObj, "title" , aHref);  
     }
