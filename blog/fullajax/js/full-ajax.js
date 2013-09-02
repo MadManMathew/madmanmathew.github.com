@@ -1,6 +1,6 @@
 
 window.FullAjaxJS = window.FullAjaxJS==null ? {} : FullAjaxJS; 
-window.FullAjaxJS.testMode = true;
+window.FullAjaxJS.testMode = false;
 
 
 
@@ -8,7 +8,7 @@ FullAjaxJS.initFullAjax = function(){
     FullAjaxJS.initAnchors();
     if(window.onpopstate == null){
         window.onpopstate = FullAjaxJS.onPushPopState;
-        FullAjaxJS.initState =  {"aHref": "/" +document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
+        FullAjaxJS.initState =  {"aHref": "/" + document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
     }
     FullAjaxJS.loaderDiv = $("#loader-div");
     $("#loader-div").remove();
@@ -111,5 +111,3 @@ FullAjaxJS.onReady = function(func){
 };
 
 $(document).ready(FullAjaxJS.initFullAjax);
-
-          
