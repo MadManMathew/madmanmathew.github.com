@@ -1,7 +1,6 @@
 
 window.FullAjaxJS = window.FullAjaxJS==null ? {} : FullAjaxJS; 
 window.FullAjaxJS.testMode = true;
-window.FullAjaxJS.rootPath = "/blog/fullajax";
 
 
 
@@ -36,7 +35,7 @@ FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isForward){
         containerToUpdate.append(FullAjaxJS.loaderDiv);
     }
     var callAjax = function(){
-    $.ajax({type: "GET",dataType: 'html', url: FullAjaxJS.rootPath + aHref
+    $.ajax({type: "GET",dataType: 'html', url: aHref
         })
         .done(function(data) {
             FullAjaxJS.updateContent(data, updateContainerId, aHref, isForward);
@@ -46,7 +45,7 @@ FullAjaxJS.makeAjaxCall = function(aHref,updateContainerId,isForward){
         });
     };
     if(window.FullAjaxJS.testMode)
-        setTimeout(callAjax,1000);
+        setTimeout(callAjax,500);
     else    
         callAjax();
 };
@@ -82,20 +81,19 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isForward){
 
 FullAjaxJS.onPushPopState = function(event)
 {   
+    var stateObj;
     if(event.state){
-        var stateObj = event.state;
-        FullAjaxJS.makeAjaxCall(stateObj.aHref, stateObj.updateContainerId, false);
-
+        stateObj = event.state;
     }
     else if(event.state == null){
-        var stateObj = FullAjaxJS.initState;    
-        if(FullAjaxJS.initState.initialLoad == false){
-            FullAjaxJS.makeAjaxCall(stateObj.aHref, stateObj.updateContainerId, false);
-        }
-        else{
+        stateObj = FullAjaxJS.initState;    
+        if(FullAjaxJS.initState.initialLoad == true){
             FullAjaxJS.initState.initialLoad = false;
+            return;
         }
     }
+    FullAjaxJS.makeAjaxCall(stateObj.aHref, stateObj.updateContainerId, false);
+
 };
 
 FullAjaxJS.executeOnReady = function(){
