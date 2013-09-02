@@ -1,0 +1,177 @@
+<html>
+<body>
+<iframe src="http://madmanmathew.github.io/blog/fullajax/index.html" style="height: 420px; width: 100%;"></iframe>
+
+Its 2013, is your website using AJAX? If it is not take a good look in the mirror. Every time I see a html gallery where I have to reload the page every time to get to the next photo I die a little inside but<br />
+why stop there? web is moving to single load web applications.<br />
+Single load applications make the user experience more fluid and enjoyable.<br />
+<br />
+<b><span style="font-size: large;">Concept</span>&nbsp;&nbsp;</b>How can we take an existing basic HMTL web page and convert it to a single load web &nbsp;application using the powers of AJAX<br />
+<br />
+<b><span style="font-size: large;">Solution</span>&nbsp;&nbsp;</b>Utilizing my lightweight api <b>full-ajax.js </b>we can achieve this, with the help of AJAX and the history api let me show you how.<br />
+<h2>
+ AJAX and the history api</h2>
+<b><span style="font-size: large;">AJAX</span>&nbsp;&nbsp;</b>Stands for Asynchronous Javascript and XML lets you make Asynchronous call to the web without having to do a page refresh, anything for images, scripts, json data and even full pages.<br />
+<pre><code>
+//Simple Jquery Ajax HTTP GET Example
+$.GET(url,function(data){
+ //Do something with data
+});
+</code></pre>
+<b><span style="font-size: large;">Hisorty Api</span>&nbsp; </b>is a new HTML5 feature that lets you mimic standard brower navigation with two simple things. One being the call of pushState which pushes a new state on the the history stack and updates the browser url bar and the other being the onpopstate callback function which is subsequently called when you later navigate using the browsers forwards and back functions.<br />
+<pre><code>
+history.pushState(stateObj,title,url);
+history.onpopstate = function(event){};
+</code></pre>
+<pre><code>
+</code></pre>
+<span style="font-size: large;">Standard Workflow:
+</span><br />
+<ol>
+<li>Modify page that would reflect the need to update the URL</li>
+<li>Call history.pushState with a StateObj, title and URL, broswer URL will change and state will be stored</li>
+<li>Later press Back on the browser the URL will update and the callback with state object will be returned in the event.</li>
+<li>Re-modify page to what it was in the previous state.</li>
+</ol>
+<h2>
+Full AJAX Solution</h2>
+Now knowing these thing we can achieve our single page load experience!<br />
+But how can we simply port our exiting web pages to utilize this powerful functionality?<br />
+<h3>
+Lest just request entire webpages using AJAX!</h3>
+<h2>
+FullAjax API Implementation</h2>
+In a nutshell we well be requesting entire html webpages and stripping out its content using special attributes, ids and classes. Instead of the default anchor behaviour we will be overriding clicks to make AJAX request.<br />
+<b>But we will not have to modify the markup!</b><br />
+First we id our main content container which contains the two columns - "mid"
+We then id our content container that contains the right column only - "mainContent"
+<br />
+We then add a special class on all our anchor classes "ajaxAnchor"
+We then add a special data- property data-update-container-id where it will be one of the above containers "mid" or "mainContent"
+<br />
+<pre><code>
+<a class="ajaxAnchor" data-update-container-id="mid" href="http://www.blogger.com/page1.html">Page 1</a>
+<div id="mid">
+<div id="mainContent">
+</div>
+</div>
+</code></pre>
+<br />
+Now with our id's and data in place we can add our anchor listeners, we will override the default anchor click for a
+AJAX call to request the href link.<br />
+<br />
+<br />
+<pre><code>
+FullAjaxJS.initAnchors = function(){
+    $("a.ajaxAnchor").unbind("click");
+    $("a.ajaxAnchor").click(function(event){
+ FullAjaxJS.makeAjaxCall(this);
+        event.preventDefault();
+        return false;
+    });
+};
+
+FullAjaxJS.makeAjaxCall = function(anchor){
+    var updateContainerId = $(anchor).attr("data-update-container-id");
+    var aHref = $(anchor).attr("href");
+    $.ajax({type: "GET",dataType: 'html', url: aHref
+        })
+        .done(function(data) {
+            FullAjaxJS.updateContent(data, updateContainerId, aHref, true);
+        })
+        .fail(function(error) { 
+            throw error;
+        });
+};
+
+</code></pre>
+We request the ENTIRE page with a Jquery GET and pass it to our updateContent function with the containerId.
+
+<br />
+<pre><code>
+FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isForward){
+    if(isForward == true){
+        var stateObj = {"aHref":aHref , "updateContainerId":updateContainerId};
+        history.pushState( stateObj, "title" , aHref);  
+    }
+    var containerToUpdate = $("#" + updateContainerId);
+    var containerToAdd = $(data).find("#" + updateContainerId);
+       
+    containerToUpdate.empty();    
+    containerToUpdate.append(containerToAdd.contents());
+    //init Anchors
+    FullAjaxJS.initAnchors();  
+};
+</code></pre>
+There area couple things to take notice here, Since we use updateContent for both going forwards and back we need to distinguish between the two. If Forward we use the pushState from the history api.
+<br />
+To update the content we simply empty the desired container and pull out that same section from the requested html data using Jquery. You will also notice we re initAnchors, we need to once again add the listeners to the html if new anchors are in the new content.<br />
+<br />
+What happens now, Well on a uswer initiated back we will receive a call back,
+First we need to add a function to the supplied call back as well and save an initState. If we dont set out init state when the back is call to the original page no state is captured.
+<br />
+<br />
+<br />
+<pre><code>
+ if(window.onpopstate == null){
+        window.onpopstate = FullAjaxJS.onPushPopState;
+        FullAjaxJS.initState =  {"aHref":document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
+    }
+
+FullAjaxJS.onPushPopState = function(event)
+{   
+    if(event.state){
+        var stateObj = event.state;
+        FullAjaxJS.callPopPushFunction(stateObj);
+    }
+    else if(event.state == null){
+        var stateObj = FullAjaxJS.initState;    
+        if(FullAjaxJS.initState.initialLoad == false){
+            FullAjaxJS.callPopPushFunction(stateObj);
+        }
+        else{
+            FullAjaxJS.initState.initialLoad = false;
+        }
+    }
+};
+
+</code></pre>
+<br />
+While working with this functionality extensively we notice onPushPopState is called on several occasions <br />
+1) on pageLoad 2) on back 3) on forward <br />
+<br />
+<h2>
+Scripting Issues</h2>
+<div>
+What happens when we want to run some javascript on our page but we load it via ajax?</div>
+<div>
+Nothing unless we handle this case properly. We have to handle both the inline and link cases.<br />
+<br /></div>
+<pre><code>
+    var scriptRegex = /&lt;script&gt;([^]*)&lt;\/script&gt;/g;
+    var s,s1;
+    while( s = scriptRegex.exec(data)){
+        eval(s[1]);
+    }
+    
+    scriptRegex = /&lt;script src=\"(.*)\"\/&gt;/g;
+    while( s1 = scriptRegex.exec(data)){
+            jQuery.getScript(s1[1], function(){
+                    //TODO
+                    FullAjaxJS.executeOnReady();
+            });
+    }
+</code></pre>
+<div>
+blarg
+test
+test
+okay
+</div>
+<div>
+<br /></div>
+<br />
+<br />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script><script src="http://madmanmathew.github.com/blog/js/blog.js"></script>
+</body>
+</html>
