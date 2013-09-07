@@ -57,7 +57,7 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
     var parseData = $.parseHTML(data,document,true);
     var containerToAdd=null;
     parseData.each(function(i,o){        
-        if(o.toString().indexOf("Script") > -1){     
+        if(o.toString().indexOf("HTMLDivElement") > -1){     
             var foundDiv = $(o).find("#" + updateContainerId);
             if(containerToAdd == null && foundDiv.length > 0)
                 containerToAdd = foundDiv;         
