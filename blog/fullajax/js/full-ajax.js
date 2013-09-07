@@ -54,7 +54,7 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
         history.pushState( stateObj, "title" , aHref);  
     }
     var containerToUpdate = $("#" + updateContainerId);
-    var containerToAdd = $(data).find("#" + updateContainerId);
+    var containerToAdd = $.parseHTML(data,document,true).find("#" + updateContainerId);
     
        
     containerToUpdate.empty();    
@@ -62,7 +62,7 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
     //init Anchors
     FullAjaxJS.initAnchors();
     //scripting
-    var scriptRegex = /<script>([^]*)<\/script>/g;
+    /*var scriptRegex = /<script>([^]*)<\/script>/g;
     var s,s1;
     while( s = scriptRegex.exec(data)){
         eval(s[1]);
@@ -74,7 +74,8 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
                     //TODO
                     FullAjaxJS.executeOnReady();
             });
-    }
+    }*/
+    FullAjaxJS.executeOnReady();
 };
 
 FullAjaxJS.onPushPopState = function(event)
