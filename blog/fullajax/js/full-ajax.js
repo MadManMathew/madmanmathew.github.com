@@ -64,10 +64,11 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
         }
         else if(o.toString().indexOf("Script") > -1){
             if(o.src.length > 0){
-                //jQuery.getScript(o.src, function(){});
+                if(src.indexOf("jquery-1.10.1.min.js") == -1 && src.indexOf("full-ajax.js") == -1)
+                    jQuery.getScript(o.src, function(){});
             }
             else{
-                //eval(o.textContent);
+                eval(o.textContent);
             }
         }
     });
