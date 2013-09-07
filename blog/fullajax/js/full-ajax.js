@@ -63,9 +63,10 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
                 containerToAdd = foundDiv;         
         }
         else if(o.toString().indexOf("Script") > -1){
-            if(o.src.length > 0){
-                if(src.indexOf("jquery-1.10.1.min.js") == -1 && src.indexOf("full-ajax.js") == -1)
-                    jQuery.getScript(o.src, function(){});
+            var jsSrc = o.src;
+            if(jsSrc.length > 0){
+                if(jsSrc.indexOf("jquery-1.10.1.min.js") == -1 && jsSrc.indexOf("full-ajax.js") == -1)
+                    jQuery.getScript(jsSrc, function(){});
             }
             else{
                 eval(o.textContent);
