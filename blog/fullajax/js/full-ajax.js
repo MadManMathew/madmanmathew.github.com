@@ -63,7 +63,12 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
                 containerToAdd = foundDiv;         
         }
         else if(o.toString().indexOf("Script") > -1){
-            
+            if(o.src.length > 0){
+                jQuery.getScript(o.src, function(){});
+            }
+            else{
+                eval(o.textContent);
+            }
         }
     });
        
