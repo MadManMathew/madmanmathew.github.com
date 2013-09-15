@@ -74,9 +74,9 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
     $(parseData).each(function(i,o){        
         if(o.toString().indexOf("Script") > -1){
             var jsSrc = o.src;
-            if(jsSrc.length > 0 && $.inArray(jsSrc, FullAjaxJS.executeOnceScript) == false)
-                    $.ajax({ url: jsSrc, dataType: "script", async: false
-                });
+            var jsName = jsSrc.substring(jsSrc.lastIndexOf("/") + 1);
+            if(jsSrc.length > 0 && $.inArray(jsSrc, FullAjaxJS.executeOnceScript) == -1)
+                    $.ajax({ url: jsSrc, dataType: "script", async: false});
             else
                 eval(o.textContent);
         }
