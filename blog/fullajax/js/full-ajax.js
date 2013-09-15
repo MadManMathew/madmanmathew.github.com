@@ -68,7 +68,8 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
         }
     });
     
-    containerToUpdate.empty();    
+    containerToUpdate.empty();
+    containerToAdd.find('script').remove();    
     containerToUpdate.append(containerToAdd.contents());
     
     $(parseData).each(function(i,o){        
