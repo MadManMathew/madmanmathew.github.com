@@ -66,17 +66,21 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
             if(containerToAdd == null && foundDiv.length > 0)
                 containerToAdd = foundDiv;         
         }
-        else if(o.toString().indexOf("Script") > -1){
-            var jsSrc = o.src;
-            if(jsSrc.length > 0 && $.inArray(jsSrc, FullAjaxJS.executeOnceScript) == false)
-                    jQuery.getScript(jsSrc, function(){});
-            else
-                eval(o.textContent);
-        }
     });
     
     containerToUpdate.empty();    
     containerToUpdate.append(containerToAdd.contents());
+    
+    $(parseData).each(function(i,o){        
+        if(o.toString().indexOf("Script") > -1){
+            var jsSrc = o.src;
+            if(jsSrc.length > 0 && $.inArray(jsSrc, FullAjaxJS.executeOnceScript) == false)
+                    $.ajax({ url: jsSrc, dataType: "script", async: false
+                });
+            else
+                eval(o.textContent);
+        }
+    });
     //init Anchors
     FullAjaxJS.initAnchors();
     //execute custom on ready
