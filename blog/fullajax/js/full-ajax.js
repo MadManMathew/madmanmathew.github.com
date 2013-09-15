@@ -68,7 +68,7 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
         }
         else if(o.toString().indexOf("Script") > -1){
             var jsSrc = o.src;
-            if(jsSrc.length > 0 && $.inArray(jsSrc, executeOnceScript) == false)
+            if(jsSrc.length > 0 && $.inArray(jsSrc, FullAjaxJS.executeOnceScript) == false)
                     jQuery.getScript(jsSrc, function(){});
             else
                 eval(o.textContent);
