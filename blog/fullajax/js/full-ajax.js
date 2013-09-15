@@ -1,16 +1,19 @@
 
 window.FullAjaxJS = window.FullAjaxJS==null ? {} : FullAjaxJS; 
 window.FullAjaxJS.testMode = false;
+window.FullAjaxJS.executeOnceScript = ["jquery-1.10.1.min.js","full-ajax.js"];
+window.FullAjaxJS.hasHistory = window.history && history.pushState;
 
 FullAjaxJS.initFullAjax = function(){
-    FullAjaxJS.initAnchors();
-    if(window.onpopstate == null){
-        window.onpopstate = FullAjaxJS.onPushPopState;
-        FullAjaxJS.initState =  {"aHref": "/" + document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
+    if(FullAjaxJS.hasHistory){
+        FullAjaxJS.initAnchors();
+        if(window.onpopstate == null){
+            window.onpopstate = FullAjaxJS.onPushPopState;
+            FullAjaxJS.initState =  {"aHref": "/" + document.location.pathname.substr(1) , "updateContainerId":"mid", "initialLoad":true};
+        }
+        FullAjaxJS.loaderDiv = $("#loader-div");
+        $("#loader-div").remove();
     }
-    FullAjaxJS.loaderDiv = $("#loader-div");
-    $("#loader-div").remove();
-    
     FullAjaxJS.executeOnReady();
 };
 
@@ -55,7 +58,8 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
     }
     var containerToUpdate = $("#" + updateContainerId);
     var parseData = $.parseHTML(data,document,true);
-    var containerToAdd=null;
+    var containerToAdd = null;
+    
     $(parseData).each(function(i,o){        
         if(o.toString().indexOf("HTMLDivElement") > -1){     
             var foundDiv = $(o).find("#" + updateContainerId);
@@ -64,37 +68,19 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
         }
         else if(o.toString().indexOf("Script") > -1){
             var jsSrc = o.src;
-            if(jsSrc.length > 0){
-                if(jsSrc.indexOf("jquery-1.10.1.min.js") == -1 && jsSrc.indexOf("full-ajax.js") == -1)
+            if(jsSrc.length > 0 && $.inArray(jsSrc, executeOnceScript) == false)
                     jQuery.getScript(jsSrc, function(){});
-            }
-            else{
+            else
                 eval(o.textContent);
-            }
         }
     });
-       
+    
     containerToUpdate.empty();    
     containerToUpdate.append(containerToAdd.contents());
     //init Anchors
     FullAjaxJS.initAnchors();
     //execute custom on ready
     FullAjaxJS.executeOnReady();
-
-    //scripting -- oldway
-    /*var scriptRegex = /<script>([^]*)<\/script>/g;
-    var s,s1;
-    while( s = scriptRegex.exec(data)){
-        eval(s[1]);
-    }
-    
-    scriptRegex = /<script src=\"(.*)\"\/>/g;
-    while( s1 = scriptRegex.exec(data)){
-            jQuery.getScript(s1[1], function(){
-                    //TODO
-                    FullAjaxJS.executeOnReady();
-            });
-    }*/
 };
 
 FullAjaxJS.onPushPopState = function(event)

@@ -9,6 +9,8 @@
 
 </head>
 <body>
+                           
+    
 	<div id="fistDiv">
 		<div id="headerPanel">
 			<div id="codeFoo">
@@ -58,16 +60,22 @@
                         <h3 id="jstest"></h3>                            
                             <script>
                                 $("#jstest").append($("<div>INLINE JAVASCRIPT EXCUTED</div>"));
-                            </script>
-                            <script src="/blog/fullajax/js/test.js"></script>
-                            <script src="/blog/fullajax/js/test.js"></script>
+                                window.FullAjaxJS.onReady(function(){
+                                    $("#jstest").append($("<div>Inline onReady function  Works!</dvi>"));
+                                });
 
+                            </script>
                         </div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+    <script>
+        $("#jstest").append($("<div>OUTSIDE MAIN DIV INLINE JAVASCRIPT EXCUTED</div>"));
+    </script>
+
+    
 <div id="loader-div">
     <div id="loader-content">
         <img src="assets/ajax-loader.gif" /><h2 style="display:inline-block;">Loading</h2>
