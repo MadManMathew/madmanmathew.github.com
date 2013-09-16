@@ -59,12 +59,16 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
     var containerToUpdate = $("#" + updateContainerId);
     var parseData = $.parseHTML(data,document,true);
     var containerToAdd = null;
-    
+    var scripts = [];
     $(parseData).each(function(i,o){        
         if(o.toString().indexOf("HTMLDivElement") > -1){     
+            $.merge(scripts , $(o).find('script'));
             var foundDiv = $(o).find("#" + updateContainerId);
             if(containerToAdd == null && foundDiv.length > 0)
                 containerToAdd = foundDiv;         
+        }
+        else if(o.toString().indexOf("Script") > -1){
+            scripts.push(o);
         }
     });
     
@@ -72,7 +76,7 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
     containerToAdd.find('script').remove();    
     containerToUpdate.append(containerToAdd.contents());
     
-    $(parseData).each(function(i,o){        
+    $(scripts).each(function(i,o){        
         if(o.toString().indexOf("Script") > -1){
             var jsSrc = o.src;
             var jsName = jsSrc.substring(jsSrc.lastIndexOf("/") + 1);
