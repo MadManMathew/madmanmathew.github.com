@@ -80,9 +80,9 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
         if(o.toString().indexOf("Script") > -1){
             var jsSrc = o.src;
             var jsName = jsSrc.substring(jsSrc.lastIndexOf("/") + 1);
-            if(jsSrc.length > 0 && $.inArray(jsSrc, FullAjaxJS.executeOnceScript) == -1)
+            if(jsSrc.length > 0 && $.inArray(jsName, FullAjaxJS.executeOnceScript) == -1)
                     $.ajax({ url: jsSrc, dataType: "script", async: false});
-            else
+            else if(o.textContent && o.textContent.length > 0)
                 eval(o.textContent);
         }
     });
