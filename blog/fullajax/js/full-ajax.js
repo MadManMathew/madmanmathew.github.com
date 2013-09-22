@@ -43,6 +43,8 @@ FullAjaxJS.initFullAjax = function(){
         $("#loader-div").remove();
     }
     FullAjaxJS.executeOnReady();
+    if(window.FullAjaxJS.testMode)
+        $(".urlBar").html(window.location.href);
 };
 
 FullAjaxJS.initAnchors = function(){
