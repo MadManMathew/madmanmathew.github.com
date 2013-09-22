@@ -114,6 +114,8 @@ FullAjaxJS.updateContent = function(data, updateContainerId, aHref, isNew){
                 eval(o.textContent);
         }
     });
+    if(window.FullAjaxJS.testMode)
+        $(".urlBar").html(window.location.href);
     //init Anchors
     FullAjaxJS.initAnchors();
     //execute custom on ready
